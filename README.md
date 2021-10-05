@@ -3,7 +3,9 @@
 Name of the Team: MushroomApplePi
 
 Members of the Team: Ringo Chui, Ali Umar 
+
 Emails: rchui3@my.yorku.ca, aumar@my.yorku.ca
+
 Student #: 216801326, 219000538
 
 Title of the Project: Squirrel Glider
