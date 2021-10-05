@@ -16,17 +16,17 @@ Description: We are making an arcade web game that allows you to control a squir
 
 Requirements:
 
-1.	Before the game starts, the user will be able to choose a display name
-2.	To play the game, keyboard key spacebar will be the primary input
-3.	Alongside the spacebar, a voice command may also be used as input
+1.	Before the game starts, the user will be given a textbox and able to type a display name
+2.	To play the game, keyboard key “spacebar” will be the primary input
+3.	Alongside the spacebar, the browser will ask for permissions to the microphone so your voice may also be used as input
 4.	The background will be scrolling during the game at a fixed scroll rate
-5.	The player will always be affected by gravity and falling to the floor
-6.	The tree heights will be randomized within reason
-7.	Once the player has passed a tree, the score will be incremented by 1
-8.	However, if the player collides with a tree edge or falls to the ground, the game will end 
+5.	The player will always be affected by gravity and always falling to the floor during the game
+6.	The tree heights will be randomized within reason so that the squirrel has room to pass
+7.	Once the player has passed a tree, the score will be incremented by 1 and shown on the top left
+8.	However, if the player collides with a tree edge or falls to the ground, the game will end, and you score will be shown
 9.	You will be prompted to play again, share, or check leaderboards
 10.	The leaderboard must be persistent and will be provided by the NodeJS backend
-11.	After the game, the user's score will be shown on a leaderboard 
+11.	After the game, the user's score will be added to the leaderboard
 
 If time persist:
 1.	Caching the player’s best score for next time they play the game
@@ -34,3 +34,4 @@ If time persist:
 3.	GHOST Ability: Able to go through trees for 3 seconds -> Cooldown 30 seconds
 4.	BOOST Ability: Gives the player 1 dash -> Cooldown 30 seconds
 5.	CHOP Ability: Gets rid of all trees on the screen -> Cooldown 30 seconds
+
