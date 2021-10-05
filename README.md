@@ -1,6 +1,6 @@
 # Squirrel-Glider1012
 
-![alt text](![alt text](https://github.com/ArmyaAli/Squirrel-Glider1012//blob/[main]/image.jpg?raw=true)
+![alt text](https://github.com/ArmyaAli/Squirrel-Glider1012//blob/[main]/image.jpg?raw=true)
 /assets/MushroomApplePiColoured.jpg)
 
 Name of the Team: MushroomApplePi
