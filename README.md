@@ -1,5 +1,7 @@
 # Squirrel-Glider1012
 
+![alt text](./assets/MushroomApplePiColoured.jpg)
+
 Name of the Team: MushroomApplePi
 
 Members of the Team: Ringo Chui, Ali Umar 
