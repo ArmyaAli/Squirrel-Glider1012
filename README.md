@@ -2,19 +2,33 @@
 
 ![alt text](./assets/Logo_2.png)
 
-Name of the Team: MushroomApplePi
+## Name of the Team
 
-Members of the Team: Ringo Chui, Ali Umar 
+MushroomApplePi
 
-Emails: rchui3@my.yorku.ca, aumar@my.yorku.ca
+## Members of the Team
 
-Student #: 216801326, 219000538
+Ringo Chui, Ali Umar 
 
-Title of the Project: Squirrel Glider
+## Emails
 
-Description: We are making an arcade web game that allows you to control a squirrel and guide him around trees. If you pass a tree you will get +1 score. The game ends when you hit a tree. (Similar to flappy bird) The twist of the game is that you will be using your voice via the web speech browser API. The squirrel will be falling unless the user makes noise to glide upwards. If we have time we will add additional special abilities, when you say a keyword it will be activated (e.g. "BOOST", "GHOST", etc.). The backend will be used for a leaderboard.
+Ali Umar: rchui3@my.yorku.ca
+Ali Umar: aumar@my.yorku.ca
 
-Requirements:
+## Student #
+
+Ali Umar:   216801326
+Ringo Chui: 219000538
+
+## Title of the Project
+
+Squirrel Glider
+
+## Description
+
+We are making an arcade web game that allows you to control a squirrel and guide him around trees. If you pass a tree you will get +1 score. The game ends when you hit a tree. (Similar to flappy bird) The twist of the game is that you will be using your voice via the web speech browser API. The squirrel will be falling unless the user makes noise to glide upwards. If we have time we will add additional special abilities, when you say a keyword it will be activated (e.g. "BOOST", "GHOST", etc.). The backend will be used for a leaderboard.
+
+## Requirements:
 
 1.	Before the game starts, the user will be given a textbox and able to type a display name
 2.	To play the game, keyboard key “spacebar” will be the primary input
@@ -28,7 +42,7 @@ Requirements:
 10.	The leaderboard must be persistent and will be provided by the NodeJS backend
 11.	After the game, the user's score will be added to the leaderboard
 
-If time persist:
+## If time persist:
 1.	Caching the player’s best score for next time they play the game
 2.	Special abilities that will be activated via voice or another keyboard input
 3.	GHOST Ability: Able to go through trees for 3 seconds -> Cooldown 30 seconds
