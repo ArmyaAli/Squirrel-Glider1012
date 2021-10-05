@@ -1,6 +1,6 @@
 # Squirrel-Glider1012
 
-![alt text](./assets.png/assets/MushroomApplePiColoured.jpg)
+![alt text](./assets/MushroomApplePiColoured.jpg)
 
 Name of the Team: MushroomApplePi
 
