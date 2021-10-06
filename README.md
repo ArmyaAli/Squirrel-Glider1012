@@ -17,8 +17,8 @@ Ali Umar:   aumar@my.yorku.ca
 
 ## Student #
 
-Ali Umar:   216801326
-Ringo Chui: 219000538
+Ringo Chui: 216801326
+Ali Umar:   219000538
 
 ## Title of the Project
 
