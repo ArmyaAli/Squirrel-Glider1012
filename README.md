@@ -13,7 +13,7 @@ Ringo Chui, Ali Umar
 ## Emails
 
 Ringo Chui: rchui3@my.yorku.ca
-Ali Umar:   aumar@my.yorku.ca
+Ali Umar:   aumar3@my.yorku.ca
 
 ## Student #
 
