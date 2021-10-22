@@ -5,6 +5,7 @@
 ## Name of the Team
 
 MushroomApplePi
+![alt text](./assets/Logo_2.png)
 
 ## Members of the Team
 
