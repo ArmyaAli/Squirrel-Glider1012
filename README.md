@@ -1,6 +1,6 @@
 # Squirrel-Glider1012
 
-![alt text](./assets/Logo_2.png)
+![alt text](./assets/SquirrelGlider_LogoBW.png)
 
 ## Name of the Team
 
@@ -48,4 +48,7 @@ We are making an arcade web game that allows you to control a squirrel and guide
 3.	GHOST Ability: Able to go through trees for 3 seconds -> Cooldown 30 seconds
 4.	BOOST Ability: Gives the player 1 dash -> Cooldown 30 seconds
 5.	CHOP Ability: Gets rid of all trees on the screen -> Cooldown 30 seconds
+
+## Wireframes:
+![alt text](./assets/wireframes.jpg)
 
