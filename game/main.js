@@ -1,20 +1,23 @@
-import { Init, CURRENT_STATE, Update, Draw, Filter } from './lifecycle.js';
+import { Init, CURRENT_STATE, Update, Draw, Filter, GAME_STATES } from './lifecycle.js';
 
 Init();
 
 const gameLoop = () => {
+    console.log(CURRENT_STATE);
     switch (CURRENT_STATE) {
-        case "INITIAL":
+        case GAME_STATES["INITIAL"]:
             Filter();
             Draw();
-            console.log(CURRENT_STATE)
             break;
-        case "PLAYING":
+        case GAME_STATES["PLAYING"]:
             Update();
             Draw();
-            console.log(CURRENT_STATE)
             break;
-        case "GAME_OVER":
+        case GAME_STATES["PAUSE"]:
+            Filter();
+            Draw();
+            break;
+        case GAME_STATES["GAME_OVER"]:
             break;
     }
     window.requestAnimationFrame(gameLoop);
