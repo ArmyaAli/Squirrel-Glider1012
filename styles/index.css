@@ -40,6 +40,12 @@
     font-size: large;
 }
 
+.name-input-elm:disabled {
+    background-color: darkgreen;
+    color: beige;
+    border: black 2px solid;
+}
+
 .button {
     width: 100px;
     height: 50px;
@@ -48,6 +54,12 @@
     border-radius: 10px;
     background-color: green;
     color: beige;
+}
+
+.button:disabled {
+    background-color: darkgreen;
+    color: beige;
+    border: black 2px solid;
 }
 
 header {
