@@ -1,19 +1,27 @@
-import { SCROLLING_BACKGROUND } from "./entities.js";
+import { SCROLLING_BACKGROUND, PLAYER } from "./entities.js";
 
-const GAME_STATES = {
-    0: "INITIAL",
-    1: "PLAYING",
-    2: "GAME_OVER"
+export const GAME_STATES = {
+    "INITIAL": 0,
+    "PLAYING": 1,
+    "PAUSE": 2,
+    "GAME_OVER": 3
 };
 
-export let CURRENT_STATE = "INITIAL";
+export let CURRENT_STATE = 0;
+
+export const SET_CURRENT_STATE = (state) => {
+    CURRENT_STATE = state;
+}
+
+export const GET_CURRENT_STATE = () => {
+    return state;
+}
 
 export const Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
 
-    name.addEventListener('keypress', (e) => {
-        console.log(e.key);
+    name.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {
             playButton.click();
         }
@@ -23,7 +31,21 @@ export const Init = () => {
         if (name.value != "") {
             playButton.disabled = true;
             name.disabled = true;
-            CURRENT_STATE = GAME_STATES[1];
+            SET_CURRENT_STATE(GAME_STATES["PLAYING"]);
+        }
+    })
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === " ") {
+
+            if (CURRENT_STATE === GAME_STATES["PLAYING"]) {
+                PLAYER.jump();
+            }
+
+        } else if (e.key === "p" && CURRENT_STATE == GAME_STATES["PLAYING"]) {
+            SET_CURRENT_STATE(GAME_STATES["PAUSE"]);
+        } else if (e.key === "p" && CURRENT_STATE == GAME_STATES["PAUSE"]) {
+            SET_CURRENT_STATE(GAME_STATES["PLAYING"]);
         }
     })
 
@@ -33,10 +55,17 @@ export const Init = () => {
 
 export const Update = () => {
     SCROLLING_BACKGROUND.update();
+
+    if (CURRENT_STATE === GAME_STATES["PLAYING"]) {
+        PLAYER.update();
+    }
 }
 
 export const Draw = () => {
     SCROLLING_BACKGROUND.draw();
+
+    if (CURRENT_STATE === GAME_STATES["PLAYING"])
+        PLAYER.draw();
 }
 
 export const Filter = () => {
