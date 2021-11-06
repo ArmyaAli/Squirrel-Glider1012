@@ -50,6 +50,7 @@ class ScrollingBackground {
     }
 
     update() {
+        bgctx.filter = 'none';
         this.bgx--;
         if (this.bgx + canvas.width <= 0)
             this.bgx = 0;
@@ -62,7 +63,7 @@ class ScrollingBackground {
     }
 
     filter() {
-        bgctx.filter = 'contrast(1.4) sepia(1) drop-shadow(-9px 9px 3px #e81)';
+        bgctx.filter = 'blur(5px)';
         bgctx.drawImage(img, this.bgx, this.bgy);
     }
 }
