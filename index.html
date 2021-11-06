@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/index.css">
     <title>Squirrel Glider</title>
+    <script type="module" src="./game/main.js"></script>
 </head>
+
 <style>
     * {
         padding: 0;
@@ -20,10 +22,41 @@
         width: 100vw;
     }
     
+    .main-view {
+        width: 100vw;
+        display: flex;
+        position: relative;
+    }
+    
+    .canvas-container {
+        width: 100%;
+        position: relative;
+    }
+    
+    .canvas-container>canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+    
     canvas {
         height: 400px;
         width: 800px;
-        border: 4px dotted green;
+        border: 4px solid black;
+    }
+    
+    .box {
+        width: 400px;
+        height: 512px;
+        background-color: green;
+        background-image: linear-gradient(green, black);
+        color: beige;
+        border: 4px solid black;
+        margin: 32px;
+        padding: 8px;
+        border-radius: 10px;
     }
     
     .center-absolute {
@@ -43,17 +76,46 @@
 </style>
 
 <body>
-    <script type="module" src="./game/main.js"></script>
-    <div class="banner"></div>
-    <div class="game">
-        <div class="name-input">
-            <label class="name-input-text" for="">Display name: </label>
-            <input class="name-input-elm" placeholder="topscore100" type="text" />
+    <header>
+        <div>
+            <img id="title" style="width:612px; height:192px" src="./assets/SquirrelGlider_LogoB.png">
         </div>
-        <canvas class="center-absolute" id="canvas-background-layer"></canvas>
-        <canvas class="center-absolute" id="canvas"></canvas>
-        <img class="bg-image center-absolute" src="assets/bg.png" />
+    </header>
+    <div class="main-view">
+        <div class="instruction box">
+            <h2 style="text-align: center;">
+                Game Instructions
+            </h2>
+            </br>
+            <h3>How to Play:</h3>
+            <ul style="list-style-type: none;">
+                <li> Start the Game: Please enter a name and click play to start! </li>
+                <li> Tap the space bar to keep the squirrel in the air </li>
+                <li> Avoid obstacles such as branches and tree trunks in your path </li>
+                <br>
+                <li><strong> The game ends when you hit an obstacle or the floor </strong></li>
+            </ul>
+        </div>
+        <div class="canvas-container">
+            <canvas id="player-layer"></canvas>
+            <canvas id="background-layer"></canvas>
+            <canvas id="trees-layer"></canvas>
+            <div class="input-container">
+                <div class="input-container-textbox">
+                    <label class="name-input-text" for="">Player: </label>
+                    <input class="name-input-elm" placeholder="Enter your name here!" type="text" />
+                    <input class="button" type="button" value="Play">
+                </div>
+            </div>
+        </div>
+        <div class="leaderboard box">
+
+        </div>
     </div>
+    <img id="image" style="display: none" src="./assets/greenbg.png" alt="">
+    <footer>
+
+    </footer>
 </body>
 
 </html>
