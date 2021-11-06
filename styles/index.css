@@ -1,19 +1,74 @@
-.name-input {
-    margin: 16px;
+.input-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    position: relative;
+    top: 520px;
+    width: 100%;
+}
+
+.input-container-textbox {
+    display: flex;
+    align-items: center;
 }
 
 .name-input-text {
-    color: red;
+    color: green;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 32px;
+    margin: 16px;
 }
 
 .name-input-elm {
-    width: 256px;
+    width: 450px;
+    height: 32px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 8px;
     border: green 2px solid;
+    border-radius: 10px;
+    background-color: beige;
+    font-size: large;
 }
+
+.name-input-elm:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    background-color: green;
+    color: beige;
+    font-size: large;
+}
+
+.button {
+    width: 100px;
+    height: 50px;
+    margin: 8px;
+    font-size: large;
+    border-radius: 10px;
+    background-color: green;
+    color: beige;
+}
+
+header {
+    background-color: green;
+    background-image: linear-gradient(green, beige);
+    display: flex;
+    justify-content: center;
+    float: center;
+}
+
+body {
+    background-color: beige;
+}
+
+footer {
+    background-color: beige;
+    background-image: linear-gradient(beige, green);
+}
+
+.instruction {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.leaderboard {}
