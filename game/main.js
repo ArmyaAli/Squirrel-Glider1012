@@ -1,23 +1,23 @@
-import { Init, CURRENT_STATE, Update, Draw, Filter, GAME_STATES, username } from './lifecycle.js';
-import { sendScore } from './network.js';
+import { Init, currentState, Update, Draw, Filter, STATES, username } from './lifecycle.js';
+import { sendScore } from './leaderboards.js';
 
 Init();
 
 const gameLoop = () => {
-    switch (CURRENT_STATE) {
-        case GAME_STATES["INITIAL"]:
+    switch (currentState) {
+        case STATES["INITIAL"]:
             Filter();
             Draw();
             break;
-        case GAME_STATES["PLAYING"]:
+        case STATES["PLAYING"]:
             Update();
             Draw();
             break;
-        case GAME_STATES["PAUSE"]:
+        case STATES["PAUSE"]:
             Filter();
             Draw();
             break;
-        case GAME_STATES["GAME_OVER"]:
+        case STATES["GAME_OVER"]:
             break;
     }
     window.requestAnimationFrame(gameLoop);

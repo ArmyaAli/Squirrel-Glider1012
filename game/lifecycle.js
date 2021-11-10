@@ -1,7 +1,7 @@
-import { SCROLLING_BACKGROUND, PLAYER } from "./entities.js";
-import { getLeaderboard } from "./network.js";
+import { BACKGROUND, PLAYER, TREES } from "./entities.js";
+import { getLeaderboard } from "./leaderboards.js";
 
-export const GAME_STATES = {
+export const STATES = {
     "INITIAL": 0,
     "PLAYING": 1,
     "PAUSE": 2,
@@ -11,14 +11,10 @@ export const GAME_STATES = {
 export let username = "";
 export let score = 0;
 
-export let CURRENT_STATE = 0;
+export let currentState = 0;
 
-export const SET_CURRENT_STATE = (state) => {
-    CURRENT_STATE = state;
-}
-
-export const GET_CURRENT_STATE = () => {
-    return state;
+export const setCurrentState = (state) => {
+    currentState = state;
 }
 
 export const Init = () => {
@@ -36,21 +32,21 @@ export const Init = () => {
             playButton.disabled = true;
             name.disabled = true;
             username = name.value;
-            SET_CURRENT_STATE(GAME_STATES["PLAYING"]);
+            setCurrentState(STATES["PLAYING"]);
         }
     })
 
     window.addEventListener('keydown', (e) => {
         if (e.key === " ") {
 
-            if (CURRENT_STATE === GAME_STATES["PLAYING"]) {
+            if (currentState === STATES["PLAYING"]) {
                 PLAYER.jump();
             }
 
-        } else if (e.key === "p" && CURRENT_STATE == GAME_STATES["PLAYING"]) {
-            SET_CURRENT_STATE(GAME_STATES["PAUSE"]);
-        } else if (e.key === "p" && CURRENT_STATE == GAME_STATES["PAUSE"]) {
-            SET_CURRENT_STATE(GAME_STATES["PLAYING"]);
+        } else if (e.key === "p" && currentState == STATES["PLAYING"]) {
+            setCurrentState(STATES["PAUSE"]);
+        } else if (e.key === "p" && currentState == STATES["PAUSE"]) {
+            setCurrentState(STATES["PLAYING"]);
         }
     })
 
@@ -60,20 +56,23 @@ export const Init = () => {
 }
 
 export const Update = () => {
-    SCROLLING_BACKGROUND.update();
+    BACKGROUND.update();
 
-    if (CURRENT_STATE === GAME_STATES["PLAYING"]) {
+    if (currentState === STATES["PLAYING"]) {
         PLAYER.update();
+        TREES.update();
     }
 }
 
 export const Draw = () => {
-    SCROLLING_BACKGROUND.draw();
+    BACKGROUND.draw();
 
-    if (CURRENT_STATE === GAME_STATES["PLAYING"])
+    if (currentState === STATES["PLAYING"]) {
         PLAYER.draw();
+        TREES.draw();
+    }
 }
 
 export const Filter = () => {
-    SCROLLING_BACKGROUND.filter();
+    BACKGROUND.filter();
 }
