@@ -10,11 +10,20 @@ export const STATES = {
 
 export let username = "";
 export let score = 0;
-
+export let deltaTime = 0;
+export let prevTime = 0;
 export let currentState = 0;
 
 export const setCurrentState = (state) => {
     currentState = state;
+}
+
+export const setDeltaTime = (t) => {
+    deltaTime = t;
+}
+
+export const setPrevTime = (t) => {
+    prevTime = t;
 }
 
 export const Init = () => {
