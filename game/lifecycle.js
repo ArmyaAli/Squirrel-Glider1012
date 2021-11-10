@@ -8,6 +8,9 @@ export const GAME_STATES = {
     "GAME_OVER": 3
 };
 
+export let username = "";
+export let score = 0;
+
 export let CURRENT_STATE = 0;
 
 export const SET_CURRENT_STATE = (state) => {
@@ -32,6 +35,7 @@ export const Init = () => {
         if (name.value != "") {
             playButton.disabled = true;
             name.disabled = true;
+            username = name.value;
             SET_CURRENT_STATE(GAME_STATES["PLAYING"]);
         }
     })
