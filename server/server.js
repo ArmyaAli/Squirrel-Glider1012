@@ -16,28 +16,45 @@ const handleRead = async(response) => {
     // parse the textfile into a javascript object
     // return JSON back to the client
     const leaderboard = {};
-    const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
-    const lines = buffer.split("\r\n");
+    try {
+        const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
+        if (buffer === "")
+            throw ("Leaderboard is empty");
 
-    for (const line of lines) {
-        const parts = line.split(/[ \t]+/);
-        leaderboard[parts[0]] = parts[1];
+        const lines = buffer.split("\r\n");
+
+        for (const line of lines) {
+            const parts = line.split(/[ \t]+/);
+            leaderboard[parts[0]] = parts[1];
+        }
+
+        // Tell the client we are sending json
+        response.writeHead(200, {
+            'Content-Type': 'application/json',
+            'X-Powered-By': 'MushroomApplePi'
+        });
+
+        // Send back our JSON
+        response.write(JSON.stringify(leaderboard));
+        response.end();
+
+    } catch (err) {
+        // Tell the client we are sending json
+        response.writeHead(200, {
+            'Content-Type': 'application/json',
+            'X-Powered-By': 'MushroomApplePi'
+        });
+        response.write(JSON.stringify({ data: "none" }));
+        response.end();
     }
-
-    // Tell the client we are sending json
-    response.writeHead(200, {
-        'Content-Type': 'application/json',
-        'X-Powered-By': 'MushroomApplePi'
-    });
-
-    // Send back our JSON
-    response.write(JSON.stringify(leaderboard));
 }
 
 const handleUpdate = async(data) => {
     // Read the entire text file into a buffer
-    // Make a js object using the data
+    // Add the textfile to the list
     // Add the 
+    console.log('recieved post');
+
 }
 
 const server = http.createServer((request, response) => {
@@ -46,10 +63,11 @@ const server = http.createServer((request, response) => {
 
     switch (method) {
         case "GET":
+            console.log('recieved get');
             handleRead(response);
             break;
         case "POST":
-            //handleWrite();
+            handleWrite();
             break;
     }
 });
