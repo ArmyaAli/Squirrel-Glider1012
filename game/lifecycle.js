@@ -1,4 +1,5 @@
 import { SCROLLING_BACKGROUND, PLAYER } from "./entities.js";
+import { getLeaderboard } from "./network.js";
 
 export const GAME_STATES = {
     "INITIAL": 0,
@@ -17,7 +18,7 @@ export const GET_CURRENT_STATE = () => {
     return state;
 }
 
-export const Init = () => {
+export const  Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
 
@@ -51,6 +52,7 @@ export const Init = () => {
 
     // The play event click will trigger a game state change if player has eneterd their name
     // it will grab the name from the input textbox
+    getLeaderboard();
 }
 
 export const Update = () => {
