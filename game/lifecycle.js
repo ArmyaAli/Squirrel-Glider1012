@@ -18,7 +18,7 @@ export const GET_CURRENT_STATE = () => {
     return state;
 }
 
-export const  Init = () => {
+export const Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
 
