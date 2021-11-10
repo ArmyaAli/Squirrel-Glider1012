@@ -16,8 +16,12 @@ const handleRead = async(response) => {
     // parse the textfile into a javascript object
     // return JSON back to the client
     const leaderboard = {};
+
     try {
         const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
+
+        res.setHeader('Access-Control-Allow-Headers', req.header.origin);
+
         if (buffer === "")
             throw ("Leaderboard is empty");
 
@@ -40,6 +44,8 @@ const handleRead = async(response) => {
 
     } catch (err) {
         // Tell the client we are sending json
+        res.setHeader('Access-Control-Allow-Headers', req.header.origin);
+
         response.writeHead(200, {
             'Content-Type': 'application/json',
             'X-Powered-By': 'MushroomApplePi'
@@ -49,11 +55,19 @@ const handleRead = async(response) => {
     }
 }
 
-const handleUpdate = async(data) => {
+const handleWrite = async(request, response) => {
     // Read the entire text file into a buffer
     // Add the textfile to the list
     // Add the 
-    console.log('recieved post');
+    let body = [];
+
+    request.on('data', (chunk) => {
+        body.push(chunk);
+    }).on('end', () => {
+        console.log(`recieved post with body ${body}`);
+        response.end();
+    });
+
 
 }
 
@@ -67,7 +81,7 @@ const server = http.createServer((request, response) => {
             handleRead(response);
             break;
         case "POST":
-            handleWrite();
+            handleWrite(request, response);
             break;
     }
 });
