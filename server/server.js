@@ -20,8 +20,6 @@ const handleRead = async(request, response) => {
     try {
         const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
 
-        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
-
         if (buffer === "")
             throw ("Leaderboard is empty");
 
@@ -32,6 +30,7 @@ const handleRead = async(request, response) => {
             leaderboard[parts[0]] = parts[1];
         }
 
+        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
         // Tell the client we are sending json
         response.writeHead(200, {
             'Content-Type': 'application/json',
