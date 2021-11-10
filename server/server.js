@@ -12,7 +12,7 @@ const { readFile } = require('fs/promises');
 
 const PORT = 8080;
 
-const handleRead = async(response) => {
+const handleRead = async(request, response) => {
     // parse the textfile into a javascript object
     // return JSON back to the client
     const leaderboard = {};
@@ -20,7 +20,7 @@ const handleRead = async(response) => {
     try {
         const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
 
-        res.setHeader('Access-Control-Allow-Headers', req.header.origin);
+        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
 
         if (buffer === "")
             throw ("Leaderboard is empty");
@@ -44,7 +44,7 @@ const handleRead = async(response) => {
 
     } catch (err) {
         // Tell the client we are sending json
-        res.setHeader('Access-Control-Allow-Headers', req.header.origin);
+        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
 
         response.writeHead(200, {
             'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const server = http.createServer((request, response) => {
     switch (method) {
         case "GET":
             console.log('recieved get');
-            handleRead(response);
+            handleRead(request, response);
             break;
         case "POST":
             handleWrite(request, response);
