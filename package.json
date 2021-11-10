@@ -1,11 +1,12 @@
 {
-  "devDependencies": {
-    "mocha": "^9.1.2"
-  },
-  "dependencies": {
-    "chai": "^4.3.4"
-  },
-  "scripts": {
-    "test": "mocha"
-  }
+    "devDependencies": {
+        "mocha": "^9.1.2"
+    },
+    "dependencies": {
+        "chai": "^4.3.4"
+    },
+    "scripts": {
+        "test": "mocha",
+        "server": "node ./server/server.js"
+    }
 }
