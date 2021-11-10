@@ -1,4 +1,4 @@
-import { setCurrentState, STATES } from "./lifecycle.js";
+import { setCurrentState, STATES, deltaTime, prevTime } from "./lifecycle.js";
 
 // CANVAS 
 const playercanvas = document.getElementById('player-layer');
@@ -22,6 +22,8 @@ class Player {
     constructor() {
         this.x = MAX_WIDTH / 3;
         this.y = MAX_HEIGHT / 2;
+        this.g = 0.1;
+        this.deltaTime = 0;
         this.mass = 1;
         this.image = new Image();
         this.image.src = "./assets/sprite/Jump_(1).png";
@@ -32,14 +34,16 @@ class Player {
     }
 
     jump() {
-        this.y -= 50;
+        this.deltaTime = 0;
+        this.y -= 20;
     }
 
     update() {
         // erase before we redraw
         playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
         if (this.y <= playercanvas.height - 75) {
-            this.y += 0.5;
+            this.deltaTime += deltaTime;
+            this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
         }
 
         if (this.y >= (playercanvas.height - 75))
@@ -108,7 +112,7 @@ class Trees {
     }
 
     update() {
-        this.x -= 2;
+        this.x -= (deltaTime / 3);
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
             this.treeOffsets = [
