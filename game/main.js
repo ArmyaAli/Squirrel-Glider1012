@@ -1,9 +1,14 @@
-import { Init, currentState, Update, Draw, Filter, STATES, username } from './lifecycle.js';
+import { Init, currentState, Update, Draw, Filter, STATES, username, deltaTime, setPrevTime, setDeltaTime, prevTime } from './lifecycle.js';
 import { sendScore } from './leaderboards.js';
 
 Init();
 
+let currentTime = Date.now();
+setPrevTime(currentTime);
+
 const gameLoop = () => {
+    setPrevTime(currentTime);
+    console.log(deltaTime);
     switch (currentState) {
         case STATES["INITIAL"]:
             Filter();
@@ -20,6 +25,8 @@ const gameLoop = () => {
         case STATES["GAME_OVER"]:
             break;
     }
+    currentTime = Date.now();
+    setDeltaTime(currentTime - prevTime);
     window.requestAnimationFrame(gameLoop);
 }
 
