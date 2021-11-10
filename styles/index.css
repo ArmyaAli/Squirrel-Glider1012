@@ -127,7 +127,11 @@
  }
  
  .instruction {
-     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
  }
  
- .leaderboard {}
+ .leaderboard {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    padding: 8px;
+ }
