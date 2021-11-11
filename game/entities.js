@@ -28,8 +28,21 @@ class Player {
         this.deltaTimeScore = 0;
         this.mass = 1;
         this.squrrilSprite = [new Image(), new Image(), new Image()];
+        this.squrril = {
+            0: {
+                image: new Image(),
+                src: "./assets/sprite/sqFall.png"
+            },
+            1: {
+                image: new Image(),
+                src: "./assets/sprite/sqJump.png"
+            },
+            2: {
+                image: new Image(),
+                src: "./assets/sprite/sqDead.png"
+            }
+        }
         this.image = new Image();
-        this.image.src = "./assets/sprite/Jump_(1).png";
         this.states = {
             "Falling": 0,
             "Jumping": 1,
@@ -37,29 +50,17 @@ class Player {
         };
         this.currentState = this.states["Falling"];
         // set the squrril images
-        this.squrrilSprite[0].src = "./assets/sprite/sqFall.png";
-        this.squrrilSprite[1].src = "./assets/sprite/sqJump.png";
-        this.squrrilSprite[2].src = "./assets/sprite/sqDead.png";
+        this.squrril[0].image.src = this.squrril[0].src;
+        this.squrril[1].image.src = this.squrril[1].src;
+        this.squrril[2].image.src = this.squrril[2].src;
     }
 
     draw() {
         playerctx.font = '48px serif';
         playerctx.fillText(`Score: ${SCORE}`, 16, 48, 200);
         playerctx.fillStyle = "#00FF49";
-        console.log('State', this.currentState);
-        switch (this.currentState) {
-            case this.states["Falling"]:
-                playerctx.drawImage(this.squrrilSprite[0], this.x, this.y, 75, 75);
-                break;
-            case this.states["Jumping"]:
-                playerctx.drawImage(this.squrrilSprite[1], this.x, this.y, 75, 75);
-                break;
-            case this.states["Dead"]:
-                playerctx.drawImage(this.squrrilSprite[2], this.x, this.y, 75, 75);
-                break;
-        }
+        playerctx.drawImage(this.squrril[this.currentState].image, this.x, this.y, 75, 75);
 
-        // playerctx.drawImage(this.image, this.x, this.y, 75, 75);
     }
 
     setState(keyEvent) {
@@ -84,7 +85,7 @@ class Player {
         //     SCORE = Math.floor((this.deltaTimeScore / deltaTime) / 1000);
         // }, deltaTime * 320);
 
-        SCORE = Math.round(this.deltaTimeScore / deltaTime) / (1 / deltaTime);
+        SCORE = Math.floor((Math.round(this.deltaTimeScore / deltaTime) / (1 / (deltaTime * 0.001))) * (deltaTime * 160 * 0.001));
 
         if (this.y <= playercanvas.height - 75) {
             this.deltaTime += deltaTime;
