@@ -13,6 +13,7 @@ const treectx = treescanvas.getContext('2d');
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 400;
 const NUM_TREES = 3;
+let SCORE = 0;
 
 // all our canvases should be equal size
 playercanvas.width = bgcanvas.width = treescanvas.width = 800;
@@ -24,15 +25,50 @@ class Player {
         this.y = MAX_HEIGHT / 2;
         this.g = 0.1;
         this.deltaTime = 0;
+        this.deltaTimeScore = 0;
         this.mass = 1;
+        this.squrrilSprite = [new Image(), new Image(), new Image()];
         this.image = new Image();
         this.image.src = "./assets/sprite/Jump_(1).png";
+        this.states = {
+            "Falling": 0,
+            "Jumping": 1,
+            "Dead": 2
+        };
+        this.currentState = this.states["Falling"];
+        // set the squrril images
+        this.squrrilSprite[0].src = "./assets/sprite/sqFall.png";
+        this.squrrilSprite[1].src = "./assets/sprite/sqJump.png";
+        this.squrrilSprite[2].src = "./assets/sprite/sqDead.png";
     }
 
     draw() {
-        playerctx.drawImage(this.image, this.x, this.y, 75, 75);
+        playerctx.font = '48px serif';
+        playerctx.fillText(`Score: ${SCORE}`, 16, 48, 200);
+        playerctx.fillStyle = "#00FF49";
+        console.log('State', this.currentState);
+        switch (this.currentState) {
+            case this.states["Falling"]:
+                playerctx.drawImage(this.squrrilSprite[0], this.x, this.y, 75, 75);
+                break;
+            case this.states["Jumping"]:
+                playerctx.drawImage(this.squrrilSprite[1], this.x, this.y, 75, 75);
+                break;
+            case this.states["Dead"]:
+                playerctx.drawImage(this.squrrilSprite[2], this.x, this.y, 75, 75);
+                break;
+        }
+
+        // playerctx.drawImage(this.image, this.x, this.y, 75, 75);
     }
 
+    setState(keyEvent) {
+        if (keyEvent === 'Keydown')
+            this.currentState = this.states["Jumping"];
+        else
+            this.currentState = this.states["Falling"];
+
+    }
     jump() {
         this.deltaTime = 0;
         this.y -= 20;
@@ -41,6 +77,15 @@ class Player {
     update() {
         // erase before we redraw
         playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
+        this.deltaTimeScore += deltaTime;
+        // update the player score too
+        // for every frame we can update the score. The average
+        // setTimeout(() => {
+        //     SCORE = Math.floor((this.deltaTimeScore / deltaTime) / 1000);
+        // }, deltaTime * 320);
+
+        SCORE = Math.round(this.deltaTimeScore / deltaTime) / (1 / deltaTime);
+
         if (this.y <= playercanvas.height - 75) {
             this.deltaTime += deltaTime;
             this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
@@ -112,7 +157,7 @@ class Trees {
     }
 
     update() {
-        this.x -= (deltaTime / 3);
+        this.x -= (deltaTime / 4);
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
             this.treeOffsets = [
