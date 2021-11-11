@@ -50,12 +50,20 @@ export const Init = () => {
 
             if (currentState === STATES["PLAYING"]) {
                 PLAYER.jump();
+                PLAYER.setState('Keydown');
             }
 
         } else if (e.key === "p" && currentState == STATES["PLAYING"]) {
             setCurrentState(STATES["PAUSE"]);
         } else if (e.key === "p" && currentState == STATES["PAUSE"]) {
             setCurrentState(STATES["PLAYING"]);
+        }
+    })
+
+    window.addEventListener('keyup', (e) => {
+
+        if (currentState === STATES["PLAYING"]) {
+            PLAYER.setState('Keyup');
         }
     })
 
