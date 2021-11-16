@@ -1,6 +1,5 @@
 {
     "scripts": {
-        "test": "mocha",
         "server": "node ./server/server.js"
     }
 }
