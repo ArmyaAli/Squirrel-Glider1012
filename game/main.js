@@ -8,7 +8,7 @@ setPrevTime(currentTime);
 
 const gameLoop = () => {
     setPrevTime(currentTime);
-    console.log(deltaTime);
+    // console.log(deltaTime);
     switch (currentState) {
         case STATES["INITIAL"]:
             Filter();
