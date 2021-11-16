@@ -1,6 +1,6 @@
 import { BACKGROUND, PLAYER, TREES } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
-
+import { collisionCheck } from "./collision.js"
 export const STATES = {
     "INITIAL": 0,
     "PLAYING": 1,
@@ -76,9 +76,13 @@ export const Update = () => {
     BACKGROUND.update();
 
     if (currentState === STATES["PLAYING"]) {
+        collisionCheck();
         PLAYER.update();
         TREES.update();
     }
+
+    // check collision
+
 }
 
 export const Draw = () => {
@@ -88,6 +92,7 @@ export const Draw = () => {
         PLAYER.draw();
         TREES.draw();
     }
+
 }
 
 export const Filter = () => {
