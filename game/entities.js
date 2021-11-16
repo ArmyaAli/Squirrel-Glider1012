@@ -26,9 +26,10 @@ class Player {
         this.g = 0.1;
         this.deltaTime = 0;
         this.deltaTimeScore = 0;
+        this.position = { x: this.x, y: this.y };
         this.mass = 1;
-        this.squrrilSprite = [new Image(), new Image(), new Image()];
-        this.squrril = {
+        this.squirrelSprite = [new Image(), new Image(), new Image()];
+        this.squirrel = {
             0: {
                 image: new Image(),
                 src: "./assets/sprite/sqFall.png"
@@ -49,17 +50,17 @@ class Player {
             "Dead": 2
         };
         this.currentState = this.states["Falling"];
-        // set the squrril images
-        this.squrril[0].image.src = this.squrril[0].src;
-        this.squrril[1].image.src = this.squrril[1].src;
-        this.squrril[2].image.src = this.squrril[2].src;
+        // set the squirrel images
+        this.squirrel[0].image.src = this.squirrel[0].src;
+        this.squirrel[1].image.src = this.squirrel[1].src;
+        this.squirrel[2].image.src = this.squirrel[2].src;
     }
 
     draw() {
         playerctx.font = '48px serif';
         playerctx.fillText(`Score: ${SCORE}`, 16, 48, 200);
         playerctx.fillStyle = "#00FF49";
-        playerctx.drawImage(this.squrril[this.currentState].image, this.x, this.y, 75, 75);
+        playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, 75, 75);
 
     }
 
@@ -70,6 +71,7 @@ class Player {
             this.currentState = this.states["Falling"];
 
     }
+
     jump() {
         this.deltaTime = 0;
         this.y -= 20;
@@ -90,6 +92,7 @@ class Player {
         if (this.y <= playercanvas.height - 75) {
             this.deltaTime += deltaTime;
             this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
+            this.position.y = this.y;
         }
 
         if (this.y >= (playercanvas.height - 75))
@@ -143,6 +146,8 @@ class Trees {
         this.imageTrunk = new Image();
         this.imageBranch.src = "./assets/branch.png";
         this.imageTrunk.src = "./assets/trunk.png";
+        this.position = [];
+        //  for (let i = 0; i < 2 * NUM_TREES; i++)
         this.treeOffsets = [
             this.heightOffset(),
             this.heightOffset(),
@@ -170,14 +175,23 @@ class Trees {
                 this.heightOffset()
             ];
         }
+        this.position = [];
     }
 
     draw() {
         treectx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
 
         for (let i = 0; i < 2 * NUM_TREES; i++) {
-            treectx.drawImage(this.imageBranch, this.x + MAX_WIDTH + this.xOffset * i, 0 - this.gap / 2 + this.treeOffsets[i], this.width, this.heightBranch);
-            treectx.drawImage(this.imageTrunk, this.x + MAX_WIDTH + this.xOffset * i, MAX_HEIGHT - this.heightTrunk + this.gap / 2 + this.treeOffsets[i], this.width, this.heightTrunk);
+            const xBranch = this.x + MAX_WIDTH + this.xOffset * i;
+            const yBranch = 0 - this.gap / 2 + this.treeOffsets[i];
+
+            const xTrunk = this.x + MAX_WIDTH + this.xOffset * i;
+            const yTrunk = MAX_HEIGHT - this.heightTrunk + this.gap / 2 + this.treeOffsets[i];
+
+            treectx.drawImage(this.imageBranch, xBranch, yBranch, this.width, this.heightBranch);
+            treectx.drawImage(this.imageTrunk, xTrunk, yTrunk, this.width, this.heightTrunk);
+
+            this.position.push({ xB: xBranch, yB: yBranch, xT: xTrunk, yT: yTrunk });
         }
     }
 }
