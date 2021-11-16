@@ -1,6 +1,7 @@
-import { BACKGROUND, PLAYER, TREES } from "./entities.js";
+import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
+
 export const STATES = {
     "INITIAL": 0,
     "PLAYING": 1,
@@ -24,6 +25,10 @@ export const setDeltaTime = (t) => {
 
 export const setPrevTime = (t) => {
     prevTime = t;
+}
+
+export const incrementScore = () => {
+    score += 1;
 }
 
 export const Init = () => {
@@ -73,12 +78,20 @@ export const Init = () => {
 }
 
 export const Update = () => {
-    BACKGROUND.update();
 
     if (currentState === STATES["PLAYING"]) {
+        BACKGROUND.update();
         collisionCheck();
         PLAYER.update();
         TREES.update();
+    }
+
+    if (currentState === STATES["GAME_OVER"]) {
+        if (DONE_FALLING) {
+            GAMEOVER.update();
+            return;
+        }
+        PLAYER.update();
     }
 
     // check collision
@@ -93,6 +106,14 @@ export const Draw = () => {
         TREES.draw();
     }
 
+    if (currentState === STATES["GAME_OVER"]) {
+        if (DONE_FALLING) {
+            GAMEOVER.draw();
+            return;
+        }
+        PLAYER.draw();
+        TREES.draw();
+    }
 }
 
 export const Filter = () => {

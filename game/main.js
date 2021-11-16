@@ -8,7 +8,6 @@ setPrevTime(currentTime);
 
 const gameLoop = () => {
     setPrevTime(currentTime);
-    // console.log(deltaTime);
     switch (currentState) {
         case STATES["INITIAL"]:
             Filter();
@@ -23,6 +22,9 @@ const gameLoop = () => {
             Draw();
             break;
         case STATES["GAME_OVER"]:
+            Filter();
+            Update();
+            Draw();
             break;
     }
     currentTime = Date.now();

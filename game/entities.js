@@ -1,4 +1,4 @@
-import { setCurrentState, STATES, deltaTime, prevTime } from "./lifecycle.js";
+import { setCurrentState, STATES, deltaTime, prevTime, score } from "./lifecycle.js";
 
 // CANVAS 
 const playercanvas = document.getElementById('player-layer');
@@ -9,15 +9,21 @@ const playerctx = playercanvas.getContext('2d');
 const bgctx = bgcanvas.getContext('2d');
 const treectx = treescanvas.getContext('2d');
 
+//AUDIO
+// for legacy browsers
+// const AudioContext = window.AudioContext || window.webkitAudioContext;
+// const audioContext = new AudioContext();
+
 // GLOBALS
-const MAX_WIDTH = 800;
-const MAX_HEIGHT = 400;
-const NUM_TREES = 3;
-let SCORE = 0;
+export const MAX_WIDTH = 800;
+export const MAX_HEIGHT = 400;
+export let DONE_FALLING = false;
+const NUM_TREES = 2.5;
 
 // all our canvases should be equal size
 playercanvas.width = bgcanvas.width = treescanvas.width = 800;
 playercanvas.height = bgcanvas.height = treescanvas.height = 400;
+
 
 class Player {
     constructor() {
@@ -26,6 +32,8 @@ class Player {
         this.g = 0.1;
         this.deltaTime = 0;
         this.deltaTimeScore = 0;
+        this.width = 75;
+        this.height = 75;
         this.position = { x: this.x, y: this.y };
         this.mass = 1;
         this.squirrelSprite = [new Image(), new Image(), new Image()];
@@ -57,11 +65,10 @@ class Player {
     }
 
     draw() {
-        playerctx.font = '48px serif';
-        playerctx.fillText(`Score: ${SCORE}`, 16, 48, 200);
+        playerctx.font = '32px sans-serif';
+        playerctx.fillText(`Score: ${score}`, 16, 48, 512);
         playerctx.fillStyle = "#00FF49";
-        playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, 75, 75);
-
+        playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, this.width, this.height);
     }
 
     setState(keyEvent) {
@@ -87,20 +94,25 @@ class Player {
         //     SCORE = Math.floor((this.deltaTimeScore / deltaTime) / 1000);
         // }, deltaTime * 320);
 
-        SCORE = Math.floor((Math.round(this.deltaTimeScore / deltaTime) / (1 / (deltaTime * 0.001))) * (deltaTime * 160 * 0.001));
+        // SCORE = Math.floor((Math.round(this.deltaTimeScore / deltaTime) / (1 / (deltaTime * 0.001))) * (deltaTime * 160 * 0.001));
+        if (this.currentState === this.states["Dead"]) {
+            this.deltaTime += deltaTime;
+            this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
+            this.x = MAX_WIDTH / 3 - 50;
+
+            if (this.y >= MAX_HEIGHT) {
+                setTimeout(() => {
+                    DONE_FALLING = true;
+                }, 600);
+            }
+            return;
+        }
 
         if (this.y <= playercanvas.height - 75) {
             this.deltaTime += deltaTime;
             this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
             this.position.y = this.y;
         }
-
-        if (this.y >= (playercanvas.height - 75))
-            setCurrentState(STATES["GAME_OVER"]);
-
-        if (this.y <= 0)
-            setCurrentState(STATES["GAME_OVER"]);
-
     }
 }
 
@@ -147,15 +159,10 @@ class Trees {
         this.imageBranch.src = "./assets/branch.png";
         this.imageTrunk.src = "./assets/trunk.png";
         this.position = [];
-        //  for (let i = 0; i < 2 * NUM_TREES; i++)
-        this.treeOffsets = [
-            this.heightOffset(),
-            this.heightOffset(),
-            this.heightOffset(),
-            this.heightOffset(),
-            this.heightOffset(),
-            this.heightOffset()
-        ];
+        this.treeOffsets = [];
+        for (let i = 0; i < 2 * NUM_TREES; i++) {
+            this.treeOffsets.push(this.heightOffset());
+        }
     }
 
     heightOffset() {
@@ -163,17 +170,18 @@ class Trees {
     }
 
     update() {
+
         this.x -= (deltaTime / 4);
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
-            this.treeOffsets = [
-                this.treeOffsets[3],
-                this.treeOffsets[4],
-                this.treeOffsets[5],
-                this.heightOffset(),
-                this.heightOffset(),
-                this.heightOffset()
-            ];
+
+            for (let i = 0; i < 2 * NUM_TREES; i++) {
+                if (i < NUM_TREES) {
+                    this.treeOffsets.splice(i, 1, this.treeOffsets[NUM_TREES + i]);
+                } else {
+                    this.treeOffsets.splice(i, 1, this.heightOffset());
+                }
+            }
         }
         this.position = [];
     }
@@ -196,6 +204,23 @@ class Trees {
     }
 }
 
+class gameOver {
+    constructor() {
+        this.message = "Game Over";
+    }
+
+    update() {
+
+    }
+
+    draw() {
+        playerctx.font = '72px sans-serif';
+        playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
+        playerctx.fillText(this.message, MAX_WIDTH / 2 - playerctx.measureText(this.message).width / 2, MAX_HEIGHT / 2);
+    }
+}
+
 export const BACKGROUND = new ScrollingBackground();
 export const PLAYER = new Player();
 export const TREES = new Trees();
+export const GAMEOVER = new gameOver();
