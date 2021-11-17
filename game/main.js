@@ -22,7 +22,6 @@ const gameLoop = () => {
             Draw();
             break;
         case STATES["GAME_OVER"]:
-            Filter();
             Update();
             Draw();
             break;

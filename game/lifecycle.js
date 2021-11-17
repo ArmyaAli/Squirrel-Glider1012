@@ -1,4 +1,4 @@
-import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED } from "./entities.js";
+import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
@@ -28,7 +28,7 @@ export const setPrevTime = (t) => {
 }
 
 export const incrementScore = () => {
-    score += (1*deltaTime)/(75 * GAME_SPEED);
+    score += (1 * deltaTime) / (75 * GAME_SPEED);
 }
 
 export const Init = () => {
@@ -71,6 +71,31 @@ export const Init = () => {
             PLAYER.setState('Keyup');
         }
     })
+
+    window.addEventListener('click', (e) => {
+        // console.log(e);
+        if (currentState !== STATES["GAME_OVER"])
+            return;
+
+        const target = e.target;
+        const rect = target.getBoundingClientRect();
+        const { x, y } = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        const message = `I%20scored%20${Math.round(score)}%20points%20on%20Squrriel%20Glider!`;
+        const twitterLink = `https://twitter.com/intent/tweet?text=${message}`;
+
+        if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
+            if (y >= BUTTON_INFO["replay"].y && y <= BUTTON_INFO["replay"].y + 80) {
+                window.location.reload();
+            }
+        }
+
+
+        if (x >= BUTTON_INFO["share"].x && x <= BUTTON_INFO["share"].x + 200) {
+            if (y >= BUTTON_INFO["share"].y && y <= BUTTON_INFO["share"].y + 80) {
+                window.location.assign(twitterLink);
+            }
+        }
+    });
 
     // The play event click will trigger a game state change if player has eneterd their name
     // it will grab the name from the input textbox

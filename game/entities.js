@@ -25,6 +25,16 @@ const NUM_TREES = 2;
 playercanvas.width = bgcanvas.width = treescanvas.width = 800;
 playercanvas.height = bgcanvas.height = treescanvas.height = 400;
 
+export const BUTTON_INFO = {
+    "replay": {
+        x: MAX_WIDTH / 2 - 200 - 40,
+        y: MAX_HEIGHT / 2
+    },
+    "share": {
+        x: MAX_WIDTH / 2 + 40,
+        y: MAX_HEIGHT / 2
+    }
+};
 
 class Player {
     constructor() {
@@ -123,8 +133,8 @@ class ScrollingBackground {
         this.y = 0;
         this.bgx = 0;
         this.bgy = 0;
-        this.image = new Image();
-        this.image.src = "./assets/greenbg.png";
+        this.imageBg = new Image();
+        this.imageBg.src = "./assets/greenbg.png";
     }
 
     update() {
@@ -137,13 +147,12 @@ class ScrollingBackground {
     }
 
     draw() {
-        bgctx.drawImage(this.image, this.bgx, this.bgy);
-        bgctx.drawImage(this.image, this.bgx + bgcanvas.width, this.bgy);
+        bgctx.drawImage(this.imageBg, this.bgx, this.bgy);
+        bgctx.drawImage(this.imageBg, this.bgx + bgcanvas.width, this.bgy);
     }
 
     filter() {
-        bgctx.filter = 'blur(5px)';
-        bgctx.drawImage(this.image, this.bgx, this.bgy);
+        bgctx.filter = 'blur(5px) brightness(80%)';
     }
 }
 
@@ -172,7 +181,7 @@ class Trees {
 
     update() {
 
-        this.x -= (deltaTime / GAME_SPEED);  
+        this.x -= (deltaTime / GAME_SPEED);
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
 
@@ -207,18 +216,41 @@ class Trees {
 
 class gameOver {
     constructor() {
-        this.message = "Game Over";
+        this.gameOverText = "Game Over";
+        this.playButtonText = "Restart";
+        this.twitterButtonText = "Share";
+        this.something = 0;
     }
 
     update() {
-
+        // hover code
     }
 
     draw() {
-        playerctx.font = '72px sans-serif';
         playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
-        playerctx.fillText(this.message, MAX_WIDTH / 2 - playerctx.measureText(this.message).width / 2, MAX_HEIGHT / 2);
+
+        playerctx.font = '96px sans-serif';
+        playerctx.textBaseline = "bottom";
+        playerctx.fillStyle = "beige";
+        playerctx.lineWidth = 3;
+        playerctx.strokeStyle = "green"
+
+        playerctx.fillText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
+        playerctx.strokeText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
+
+        playerctx.fillRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2, 200, 80);
+        playerctx.fillRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2, 200, 80);
+        playerctx.strokeRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2, 200, 80);
+        playerctx.strokeRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2, 200, 80);
+        // text for inside the button + 4
+
+        // playerctx.textAlign = "center";
+        playerctx.font = '32px sans-serif';
+        playerctx.fillStyle = "black";
+        playerctx.fillText(this.playButtonText, MAX_WIDTH / 2 - 200 - 40 + 100 - playerctx.measureText(this.playButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4);
+        playerctx.fillText(this.twitterButtonText, MAX_WIDTH / 2 + 40 + 100 - playerctx.measureText(this.twitterButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4);
     }
+
 }
 
 export const BACKGROUND = new ScrollingBackground();
