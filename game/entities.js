@@ -17,8 +17,9 @@ const treectx = treescanvas.getContext('2d');
 // GLOBALS
 export const MAX_WIDTH = 800;
 export const MAX_HEIGHT = 400;
+export const GAME_SPEED = 3; // smaller = faster
 export let DONE_FALLING = false;
-const NUM_TREES = 2.5;
+const NUM_TREES = 2;
 
 // all our canvases should be equal size
 playercanvas.width = bgcanvas.width = treescanvas.width = 800;
@@ -66,7 +67,7 @@ class Player {
 
     draw() {
         playerctx.font = '32px sans-serif';
-        playerctx.fillText(`Score: ${score}`, 16, 48, 512);
+        playerctx.fillText(`Score: ${Math.round(score)}`, 16, 48, 512);
         playerctx.fillStyle = "#00FF49";
         playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, this.width, this.height);
     }
@@ -171,7 +172,7 @@ class Trees {
 
     update() {
 
-        this.x -= (deltaTime / 4);
+        this.x -= (deltaTime / GAME_SPEED);  
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
 
