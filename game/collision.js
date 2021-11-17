@@ -1,5 +1,5 @@
 import { TREES, PLAYER, MAX_HEIGHT, MAX_WIDTH } from "./entities.js";
-import { setCurrentState, incrementScore, STATES } from "./lifecycle.js";
+import { setCurrentState, incrementScore, STATES, deltaTime} from "./lifecycle.js";
 
 export const collisionCheck = () => {
     const trees = TREES.position;
@@ -13,9 +13,7 @@ export const collisionCheck = () => {
                     PLAYER.currentState = PLAYER.states["Dead"];
                     setCurrentState(STATES["GAME_OVER"]);
                 } else {
-                    if (Math.floor(player.x) == Math.floor(trees[i].xT + TREES.width) - 1) {
-                        incrementScore();
-                    }
+                    incrementScore();
                 }
             }
         }

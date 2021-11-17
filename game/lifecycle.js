@@ -1,4 +1,4 @@
-import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER } from "./entities.js";
+import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
@@ -28,7 +28,7 @@ export const setPrevTime = (t) => {
 }
 
 export const incrementScore = () => {
-    score += 1;
+    score += (1*deltaTime)/(75 * GAME_SPEED);
 }
 
 export const Init = () => {
