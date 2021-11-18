@@ -184,7 +184,6 @@ class Trees {
         this.x -= (deltaTime / GAME_SPEED);
         if (this.x <= -(2 * MAX_WIDTH)) {
             this.x = -MAX_WIDTH;
-
             for (let i = 0; i < 2 * NUM_TREES; i++) {
                 if (i < NUM_TREES) {
                     this.treeOffsets.splice(i, 1, this.treeOffsets[NUM_TREES + i]);
