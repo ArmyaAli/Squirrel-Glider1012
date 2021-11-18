@@ -1,7 +1,6 @@
 const url = "http://localhost:8080";
 
 export const getLeaderboard = async() => {
-
     const leaderboard = document.querySelector(".leaderboard>ol");
 
     let request = new Request(url);
@@ -15,6 +14,9 @@ export const getLeaderboard = async() => {
 
         const data = await response.json();
 
+        // first remove all leaderboard entries and then update the leaderboard
+        leaderboard.replaceChildren();
+        // then populate
         for (const username of Object.keys(data)) {
             const item = document.createElement('li');
             item.textContent = `${username}: ${data[username]}`;
@@ -27,22 +29,19 @@ export const getLeaderboard = async() => {
 }
 
 export const sendScore = async(username, score) => {
-    // Example POST method implementation:
-    let data = {};
-    data[username] = score;
-    console.log(username, score, data)
-        // Default options are marked with *
-    const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        // mode: 'cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
+    const config = {
+        method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
+        body: `${username}=${score}`,
+    }
 
-    console.log(response.json()); // parses JSON response into native JavaScript objects
-
+    try {
+        const response = await fetch(url, config);
+        getLeaderboard();
+        // console.log(response);
+    } catch (err) {
+        console.log(err);
+    }
 }
