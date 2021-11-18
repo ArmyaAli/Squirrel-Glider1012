@@ -73,14 +73,13 @@ export const Init = () => {
     })
 
     window.addEventListener('click', (e) => {
-        // console.log(e);
         if (currentState !== STATES["GAME_OVER"])
             return;
 
         const target = e.target;
         const rect = target.getBoundingClientRect();
         const { x, y } = { x: e.clientX - rect.left, y: e.clientY - rect.top };
-        const message = `I%20scored%20${Math.round(score)}%20points%20on%20Squrriel%20Glider!`;
+        const message = `PogChamp%20I%20scored%20${Math.round(score)}%20points%20on%20Squrriel%20Glider!`;
         const twitterLink = `https://twitter.com/intent/tweet?text=${message}`;
 
         if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
