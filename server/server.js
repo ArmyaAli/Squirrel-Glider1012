@@ -8,29 +8,36 @@
 // https://nodejs.org/es/docs/guides/anatomy-of-an-http-transaction/
 
 const http = require('http');
-const { readFile } = require('fs/promises');
+const { readFile, writeFile } = require('fs/promises');
 
 const PORT = 8080;
+const DATABASE = "./server/leaderboard.txt";
 
-const handleRead = async(request, response) => {
-    // parse the textfile into a javascript object
-    // return JSON back to the client
-    const leaderboard = {};
+const readFromFile = async() => {
+    const leaderboard = [];
+
+    const buffer = await readFile(DATABASE, { encoding: "utf-8", flag: "r" });
+
+    if (buffer === "")
+        return [];
+
+    const lines = buffer.split("\n");
+
+    for (const line of lines) {
+        const parts = line.split(/[ \t]+/);
+        leaderboard.push([parts[0], parts[1]]);
+    }
+
+    return leaderboard;
+}
+
+const handleReadRequest = async(request, response) => {
 
     try {
-        const buffer = await readFile('./server/leaderboard.txt', { encoding: "utf-8", flag: "r" });
 
-        if (buffer === "")
-            throw ("Leaderboard is empty");
+        const leaderboard = await readFromFile();
 
-        const lines = buffer.split("\r\n");
-
-        for (const line of lines) {
-            const parts = line.split(/[ \t]+/);
-            leaderboard[parts[0]] = parts[1];
-        }
-
-        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
+        response.setHeader('Access-Control-Allow-Origin', "*");
         // Tell the client we are sending json
         response.writeHead(200, {
             'Content-Type': 'application/json',
@@ -43,7 +50,7 @@ const handleRead = async(request, response) => {
 
     } catch (err) {
         // Tell the client we are sending json
-        response.setHeader('Access-Control-Allow-Origin', request.headers.origin);
+        response.setHeader('Access-Control-Allow-Origin', "*");
 
         response.writeHead(200, {
             'Content-Type': 'application/json',
@@ -54,33 +61,57 @@ const handleRead = async(request, response) => {
     }
 }
 
-const handleWrite = async(request, response) => {
-    // Read the entire text file into a buffer
-    // Add the textfile to the list
-    // Add the 
-    let body = [];
+const handleWriteRequest = async(request, response) => {
+    let body = "";
 
     request.on('data', (chunk) => {
-        body.push(chunk);
-    }).on('end', () => {
-        console.log(`recieved post with body ${body}`);
-        response.end();
+        body += chunk.toString();
+    }).on('end', async() => {
+        try {
+
+            const data = body;
+            const leaderboard = await readFromFile();
+            leaderboard.push(data.split('='));
+
+            let buffer = "";
+
+            leaderboard.forEach((pair) => {
+                buffer += `${pair[0]}\t${pair[1]}\n`;
+            });
+
+            writeFile(DATABASE, buffer.trimEnd());
+            // Tell the client we are sending json
+            response.setHeader('Access-Control-Allow-Origin', "*");
+
+            response.writeHead(200, {
+                'Content-Type': 'application/json',
+                'X-Powered-By': 'MushroomApplePi'
+            });
+            response.write(JSON.stringify({ data: "success" }));
+            response.end();
+
+        } catch (err) {
+            console.log(err)
+            response.setHeader('Access-Control-Allow-Origin', "*");
+
+            response.writeHead(200, {
+                'Content-Type': 'application/json',
+                'X-Powered-By': 'MushroomApplePi'
+            });
+            response.end();
+        }
     });
-
-
 }
 
 const server = http.createServer((request, response) => {
     const { method, url } = request;
     const { headers } = request;
-
     switch (method) {
         case "GET":
-            console.log('recieved get');
-            handleRead(request, response);
+            handleReadRequest(request, response);
             break;
         case "POST":
-            handleWrite(request, response);
+            handleWriteRequest(request, response);
             break;
     }
 });
