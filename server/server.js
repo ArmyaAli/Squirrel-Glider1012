@@ -88,16 +88,7 @@ const handleWriteRequest = async(request, response) => {
 
             let leaderboard = await readFromFile();
 
-            leaderboard.push([data['name'], data['val']]);
-
-            leaderboard = leaderboard.sort((first, second) => {
-                if (parseInt(first[1]) > parseInt(second[1]))
-                    return -1;
-                else if (parseInt(first[1]) < parseInt(second[1]))
-                    return 1;
-                else
-                    return 0;
-            });
+            leaderboard.unshift([data['name'], data['val']]);
 
             let buffer = "";
 
@@ -120,7 +111,7 @@ const handleWriteRequest = async(request, response) => {
             console.log(err)
             response.setHeader('Access-Control-Allow-Origin', "*");
 
-            response.writeHead(200, {
+            response.writeHead(404, {
                 'Content-Type': 'application/json',
                 'X-Powered-By': 'MushroomApplePi'
             });
