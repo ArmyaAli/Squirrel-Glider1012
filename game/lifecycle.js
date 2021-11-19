@@ -34,6 +34,7 @@ export const incrementScore = () => {
 export const Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
+    const errorMessage = document.querySelector(".input-error");
 
     name.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {
@@ -42,12 +43,23 @@ export const Init = () => {
     })
 
     playButton.addEventListener('click', () => {
-        if (name.value != "") {
-            playButton.disabled = true;
-            name.disabled = true;
-            username = name.value;
-            setCurrentState(STATES["PLAYING"]);
+        if (name.value.includes(" ")) {
+            errorMessage.innerHTML = "You may not have spaces in your username!"
+            return;
         }
+
+        if (name.value == "") {
+            errorMessage.innerHTML = "Your username may not be empty!"
+            return;
+        }
+
+        playButton.disabled = true;
+        name.disabled = true;
+        username = name.value;
+        setCurrentState(STATES["PLAYING"]);
+        errorMessage.innerHTML = "";
+
+
     })
 
     window.addEventListener('keydown', (e) => {
