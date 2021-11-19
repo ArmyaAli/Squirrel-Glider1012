@@ -30,6 +30,9 @@ export const getLeaderboard = async() => {
 }
 
 export const sendScore = async(username, score) => {
+    if (score === 0)
+        return;
+
     const config = {
         method: 'POST',
         body: JSON.stringify({ name: username, val: score })
