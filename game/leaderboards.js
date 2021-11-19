@@ -31,16 +31,12 @@ export const getLeaderboard = async() => {
 export const sendScore = async(username, score) => {
     const config = {
         method: 'POST',
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `${username}=${score}`,
+        body: JSON.stringify({ name: username, val: score })
     }
 
     try {
         const response = await fetch(url, config);
         getLeaderboard();
-        // console.log(response);
     } catch (err) {
         console.log(err);
     }
