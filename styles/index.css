@@ -78,6 +78,11 @@
      font-size: large;
  }
  
+ .input-error {
+     color: red;
+     font-size: 24px;
+ }
+ 
  .name-input-elm:focus {
      outline-style: none;
      box-shadow: none;
@@ -127,11 +132,11 @@
  }
  
  .instruction {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+     font-family: Verdana, Geneva, Tahoma, sans-serif;
  }
  
  .leaderboard {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    text-align: center;
-    padding: 8px;
+     font-family: Verdana, Geneva, Tahoma, sans-serif;
+     text-align: center;
+     padding: 8px;
  }
