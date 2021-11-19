@@ -14,7 +14,7 @@ const PORT = 8080;
 const DATABASE = "./server/leaderboard.txt";
 
 const readFromFile = async() => {
-    const leaderboard = [];
+    let leaderboard = [];
 
     const buffer = await readFile(DATABASE, { encoding: "utf-8", flag: "r" });
 
@@ -28,7 +28,20 @@ const readFromFile = async() => {
         leaderboard.push([parts[0], parts[1]]);
     }
 
+    leaderboard = leaderboard.sort((first, second) => {
+        if (parseInt(first[1]) > parseInt(second[1]))
+            return -1;
+        else if (parseInt(first[1]) < parseInt(second[1]))
+            return 1;
+        else
+            return 0;
+    });
+
+    console.log(leaderboard);
+
     return leaderboard;
+
+
 }
 
 const handleReadRequest = async(request, response) => {
@@ -49,6 +62,7 @@ const handleReadRequest = async(request, response) => {
         response.end();
 
     } catch (err) {
+        console.log(err);
         // Tell the client we are sending json
         response.setHeader('Access-Control-Allow-Origin', "*");
 
@@ -56,6 +70,7 @@ const handleReadRequest = async(request, response) => {
             'Content-Type': 'application/json',
             'X-Powered-By': 'MushroomApplePi'
         });
+
         response.write(JSON.stringify({ data: "none" }));
         response.end();
     }
@@ -70,14 +85,27 @@ const handleWriteRequest = async(request, response) => {
         try {
 
             const data = body;
-            const leaderboard = await readFromFile();
+
+            let leaderboard = await readFromFile();
+
             leaderboard.push(data.split('='));
+
+            leaderboard = leaderboard.sort((first, second) => {
+                if (parseInt(first[1]) > parseInt(second[1]))
+                    return -1;
+                else if (parseInt(first[1]) < parseInt(second[1]))
+                    return 1;
+                else
+                    return 0;
+            });
 
             let buffer = "";
 
             leaderboard.forEach((pair) => {
                 buffer += `${pair[0]}\t${pair[1]}\n`;
             });
+
+            console.log(buffer);
 
             writeFile(DATABASE, buffer.trimEnd());
             // Tell the client we are sending json
