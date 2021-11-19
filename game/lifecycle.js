@@ -84,6 +84,32 @@ export const Init = () => {
         }
     })
 
+    window.addEventListener('mousemove', (e) => {
+        if (currentState !== STATES["GAME_OVER"])
+            return;
+
+        const target = e.target;
+        const rect = target.getBoundingClientRect();
+        const { x, y } = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+
+        if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
+            if (y >= BUTTON_INFO["replay"].y && y <= BUTTON_INFO["replay"].y + 80) {
+                document.body.style.cursor = 'pointer';
+                return;
+            }
+        }
+
+        if (x >= BUTTON_INFO["share"].x && x <= BUTTON_INFO["share"].x + 200) {
+            if (y >= BUTTON_INFO["share"].y && y <= BUTTON_INFO["share"].y + 80) {
+                document.body.style.cursor = 'pointer';
+                return;
+            }
+        }
+
+        document.body.style.cursor = 'default';
+
+    });
+
     window.addEventListener('click', (e) => {
         if (currentState !== STATES["GAME_OVER"])
             return;
