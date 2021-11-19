@@ -10,7 +10,8 @@
 const http = require('http');
 const { readFile, writeFile } = require('fs/promises');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
+
 const DATABASE = "./server/leaderboard.txt";
 
 const readFromFile = async() => {
