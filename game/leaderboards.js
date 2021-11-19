@@ -13,13 +13,14 @@ export const getLeaderboard = async() => {
         const response = await fetch(request, config);
 
         const data = await response.json();
+        console.log(data);
 
         // first remove all leaderboard entries and then update the leaderboard
         leaderboard.replaceChildren();
         // then populate
-        for (const username of Object.keys(data)) {
+        for (const entry of data) {
             const item = document.createElement('li');
-            item.textContent = `${username}: ${data[username]}`;
+            item.innerHTML = `<span class='leaderboard-entry'>${entry[0]}<---->${entry[1]}</span>`;
             leaderboard.appendChild(item);
         }
 
