@@ -12,7 +12,7 @@ const { readFile, writeFile } = require('fs/promises');
 
 const PORT = process.env.PORT || 8080;
 
-const DATABASE = "./server/leaderboard.txt";
+const DATABASE = process.env.PORT ? "./leaderboard.txt" : "./server/leaderboard.txt";
 
 const readFromFile = async() => {
     let leaderboard = [];
