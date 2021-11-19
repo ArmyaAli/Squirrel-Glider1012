@@ -108,10 +108,15 @@
      color: beige;
  }
  
+ .button:hover {
+     cursor: pointer;
+ }
+ 
  .button:disabled {
      background-color: darkgreen;
      color: beige;
      border: black 2px solid;
+     cursor: default;
  }
  
  header {
