@@ -37,7 +37,6 @@ const readFromFile = async() => {
             return 0;
     });
 
-    console.log(leaderboard);
 
     return leaderboard;
 
@@ -84,11 +83,11 @@ const handleWriteRequest = async(request, response) => {
     }).on('end', async() => {
         try {
 
-            const data = body;
+            const data = JSON.parse(body);
 
             let leaderboard = await readFromFile();
 
-            leaderboard.push(data.split('='));
+            leaderboard.push([data['name'], data['val']]);
 
             leaderboard = leaderboard.sort((first, second) => {
                 if (parseInt(first[1]) > parseInt(second[1]))
@@ -104,8 +103,6 @@ const handleWriteRequest = async(request, response) => {
             leaderboard.forEach((pair) => {
                 buffer += `${pair[0]}\t${pair[1]}\n`;
             });
-
-            console.log(buffer);
 
             writeFile(DATABASE, buffer.trimEnd());
             // Tell the client we are sending json
@@ -132,8 +129,8 @@ const handleWriteRequest = async(request, response) => {
 }
 
 const server = http.createServer((request, response) => {
-    const { method, url } = request;
-    const { headers } = request;
+    const { method } = request;
+
     switch (method) {
         case "GET":
             handleReadRequest(request, response);
