@@ -72,8 +72,11 @@ class Player {
 
     draw() {
         playerctx.font = '32px sans-serif';
+        playerctx.fillStyle = "beige";
+        playerctx.strokeStyle = "black"
+        playerctx.lineWidth = 1;
         playerctx.fillText(`Score: ${Math.round(score)}`, 16, 48, 512);
-        playerctx.fillStyle = "#00FF49";
+        playerctx.strokeText(`Score: ${Math.round(score)}`, 16, 48, 512);
         playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, this.width, this.height);
     }
 
@@ -147,7 +150,7 @@ class ScrollingBackground {
     }
 
     filter() {
-        bgctx.filter = 'blur(5px) brightness(80%)';
+        bgctx.filter = 'blur(5px) brightness(50%)';
     }
 }
 
@@ -213,7 +216,7 @@ class gameOver {
         this.gameOverText = "Game Over";
         this.playButtonText = "Restart";
         this.twitterButtonText = "Share";
-        // this.scoreText = `Score: ${Math.round(score)}`;
+        this.scoreText = "";
         this.something = 0;
     }
 
@@ -222,6 +225,7 @@ class gameOver {
     }
 
     draw() {
+        this.scoreText = `Score: ${Math.round(score)}`;
         playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
 
         playerctx.font = '96px sans-serif';
@@ -232,18 +236,26 @@ class gameOver {
 
         playerctx.fillText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
         playerctx.strokeText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
+        
+        playerctx.font = '64px sans-serif';
+        playerctx.lineWidth = 2;
 
-        playerctx.fillRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2, 200, 80);
-        playerctx.fillRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2, 200, 80);
-        playerctx.strokeRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2, 200, 80);
-        playerctx.strokeRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2, 200, 80);
+        playerctx.fillText(this.scoreText, MAX_WIDTH / 2 - playerctx.measureText(this.scoreText).width / 2, MAX_HEIGHT / 2 + 40);
+        playerctx.strokeText(this.scoreText, MAX_WIDTH / 2 - playerctx.measureText(this.scoreText).width / 2, MAX_HEIGHT / 2 + 40);
+
+        playerctx.lineWidth = 2;
+
+        playerctx.fillRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2 + 60, 200, 80);
+        playerctx.fillRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2 + 60, 200, 80);
+        playerctx.strokeRect(MAX_WIDTH / 2 - 200 - 40, MAX_HEIGHT / 2 + 60, 200, 80);
+        playerctx.strokeRect(MAX_WIDTH / 2 + 40, MAX_HEIGHT / 2 + 60, 200, 80);
         // text for inside the button + 4
 
         // playerctx.textAlign = "center";
         playerctx.font = '32px sans-serif';
         playerctx.fillStyle = "black";
-        playerctx.fillText(this.playButtonText, MAX_WIDTH / 2 - 200 - 40 + 100 - playerctx.measureText(this.playButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4);
-        playerctx.fillText(this.twitterButtonText, MAX_WIDTH / 2 + 40 + 100 - playerctx.measureText(this.twitterButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4);
+        playerctx.fillText(this.playButtonText, MAX_WIDTH / 2 - 200 - 40 + 100 - playerctx.measureText(this.playButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4 + 60);
+        playerctx.fillText(this.twitterButtonText, MAX_WIDTH / 2 + 40 + 100 - playerctx.measureText(this.twitterButtonText).width / 2, (MAX_HEIGHT / 2) + 32 + 20 + 4 + 60);
     }
 
 }
