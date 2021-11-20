@@ -213,6 +213,7 @@ class gameOver {
         this.gameOverText = "Game Over";
         this.playButtonText = "Restart";
         this.twitterButtonText = "Share";
+        // this.scoreText = `Score: ${Math.round(score)}`;
         this.something = 0;
     }
 
