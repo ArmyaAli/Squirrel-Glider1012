@@ -9,11 +9,6 @@ const playerctx = playercanvas.getContext('2d');
 const bgctx = bgcanvas.getContext('2d');
 const treectx = treescanvas.getContext('2d');
 
-//AUDIO
-// for legacy browsers
-// const AudioContext = window.AudioContext || window.webkitAudioContext;
-// const audioContext = new AudioContext();
-
 // GLOBALS
 export const MAX_WIDTH = 800;
 export const MAX_HEIGHT = 400;

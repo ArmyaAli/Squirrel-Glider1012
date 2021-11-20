@@ -1,17 +1,14 @@
 const url = "http://localhost:8080";
 
 export const getLeaderboard = async() => {
-
     const leaderboard = document.querySelector(".leaderboard>ol");
-
-    let request = new Request(url);
     const config = {
         method: 'GET',
         cache: 'default'
     };
 
     try {
-        const response = await fetch(request, config);
+        const response = await fetch(url, config);
 
         const data = await response.json();
 

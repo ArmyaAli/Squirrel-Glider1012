@@ -2,6 +2,32 @@ import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED } from ".
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
+//AUDIO
+// for legacy browsers
+// get the audio element
+const audioBackground = new Audio("./assets/song.mp3");
+audioBackground.playbackRate = 1.0; 
+const audioContext1 = new AudioContext();
+const bgTrack = audioContext1.createMediaElementSource(audioBackground);
+audioBackground.volume = 0.05;
+
+const audioDead = new Audio("./assets/death.mp3");
+const audioJump = new Audio("./assets/jump.mp3");
+
+const audioContext2 = new AudioContext();
+const audioContext3 = new AudioContext();
+
+audioDead.volume = 0.1;
+audioJump.volume = 0.05;
+
+// pass it into the audio context
+const deadTrack = audioContext2.createMediaElementSource(audioDead);
+const jumpTrack = audioContext3.createMediaElementSource(audioJump);
+
+bgTrack.connect(audioContext1.destination);
+deadTrack.connect(audioContext2.destination);
+jumpTrack.connect(audioContext3.destination);
+
 export const STATES = {
     "INITIAL": 0,
     "PLAYING": 1,
@@ -35,6 +61,12 @@ export const Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
 
+    const audioBackground = new Audio("./assets/song.mp3");
+    audioBackground.playbackRate = 1.0; 
+    const audioContext1 = new AudioContext();
+    const bgTrack = audioContext1.createMediaElementSource(audioBackground);
+    audioBackground.volume = 0.05;
+
     name.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {
             playButton.click();
@@ -46,6 +78,7 @@ export const Init = () => {
             playButton.disabled = true;
             name.disabled = true;
             username = name.value;
+            audioBackground.play();
             setCurrentState(STATES["PLAYING"]);
         }
     })
@@ -54,13 +87,17 @@ export const Init = () => {
         if (e.key === " ") {
 
             if (currentState === STATES["PLAYING"]) {
+                audioJump.currentTime = 0;
+                audioJump.play();
                 PLAYER.jump();
                 PLAYER.setState('Keydown');
             }
 
         } else if (e.key === "p" && currentState == STATES["PLAYING"]) {
+            audioBackground.pause();
             setCurrentState(STATES["PAUSE"]);
         } else if (e.key === "p" && currentState == STATES["PAUSE"]) {
+            audioBackground.play();
             setCurrentState(STATES["PLAYING"]);
         }
     })
@@ -91,6 +128,9 @@ export const Update = () => {
             GAMEOVER.update();
             return;
         }
+        audioBackground.pause();
+        audioBackground.currentTime = 0;
+        audioDead.play();
         PLAYER.update();
     }
 
