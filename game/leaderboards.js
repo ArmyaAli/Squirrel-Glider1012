@@ -11,10 +11,14 @@ export const getLeaderboard = async() => {
         const response = await fetch(url, config);
 
         const data = await response.json();
+        console.log(data);
 
-        for (const username of Object.keys(data)) {
+        // first remove all leaderboard entries and then update the leaderboard
+        leaderboard.replaceChildren();
+        // then populate
+        for (const entry of data) {
             const item = document.createElement('li');
-            item.textContent = `${username}: ${data[username]}`;
+            item.innerHTML = `<span class='leaderboard-entry'>${entry[0]}<---->${entry[1]}</span>`;
             leaderboard.appendChild(item);
         }
 
@@ -24,22 +28,18 @@ export const getLeaderboard = async() => {
 }
 
 export const sendScore = async(username, score) => {
-    // Example POST method implementation:
-    let data = {};
-    data[username] = score;
-    console.log(username, score, data)
-        // Default options are marked with *
-    const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        // mode: 'cors', // no-cors, *cors, same-origin
-        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
+    if (score === 0)
+        return;
 
-    console.log(response.json()); // parses JSON response into native JavaScript objects
+    const config = {
+        method: 'POST',
+        body: JSON.stringify({ name: username, val: score })
+    }
 
+    try {
+        const response = await fetch(url, config);
+        getLeaderboard();
+    } catch (err) {
+        console.log(err);
+    }
 }
