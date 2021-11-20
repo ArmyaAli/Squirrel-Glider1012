@@ -61,6 +61,7 @@ export const Init = () => {
     const playButton = document.querySelector("input.button");
     const name = document.querySelector(".name-input-elm");
     const errorMessage = document.querySelector(".input-error");
+    const toggleMute = document.querySelector(".toggleMute");
 
     name.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {
@@ -92,6 +93,22 @@ export const Init = () => {
         errorMessage.innerHTML = "";
 
 
+    })
+
+    toggleMute.addEventListener('click', () => {
+        if (audioBackground.muted == true && audioDead.muted == true && audioJump.muted == true) {
+            audioBackground.muted = false;
+            audioDead.muted = false;
+            audioJump.muted = false;
+            document.getElementById("toggleMute").src = "./assets/play.png";
+        } else {
+            audioBackground.muted = true;
+            audioDead.muted = true;
+            audioJump.muted = true;
+            document.getElementById("toggleMute").src = "./assets/mute.png";
+
+        }
+        console.log("toggle mute");
     })
 
     window.addEventListener('keydown', (e) => {
@@ -129,14 +146,14 @@ export const Init = () => {
         const { x, y } = { x: e.clientX - rect.left, y: e.clientY - rect.top };
 
         if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
-            if (y >= BUTTON_INFO["replay"].y && y <= BUTTON_INFO["replay"].y + 80) {
+            if (y >= BUTTON_INFO["replay"].y + 50 && y <= BUTTON_INFO["replay"].y + 80 + 50) {
                 document.body.style.cursor = 'pointer';
                 return;
             }
         }
 
         if (x >= BUTTON_INFO["share"].x && x <= BUTTON_INFO["share"].x + 200) {
-            if (y >= BUTTON_INFO["share"].y && y <= BUTTON_INFO["share"].y + 80) {
+            if (y >= BUTTON_INFO["share"].y + 60 && y <= BUTTON_INFO["share"].y + 80 + 60) {
                 document.body.style.cursor = 'pointer';
                 return;
             }
@@ -157,14 +174,14 @@ export const Init = () => {
         const twitterLink = `https://twitter.com/intent/tweet?text=${message}`;
 
         if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
-            if (y >= BUTTON_INFO["replay"].y && y <= BUTTON_INFO["replay"].y + 80) {
+            if (y >= BUTTON_INFO["replay"].y + 60 && y <= BUTTON_INFO["replay"].y + 80 + 60) {
                 window.location.reload();
             }
         }
 
 
         if (x >= BUTTON_INFO["share"].x && x <= BUTTON_INFO["share"].x + 200) {
-            if (y >= BUTTON_INFO["share"].y && y <= BUTTON_INFO["share"].y + 80) {
+            if (y >= BUTTON_INFO["share"].y + 60 && y <= BUTTON_INFO["share"].y + 80 + 60) {
                 window.location.assign(twitterLink);
             }
         }
@@ -210,6 +227,7 @@ export const Draw = () => {
     if (currentState === STATES["GAME_OVER"]) {
         if (DONE_FALLING) {
             GAMEOVER.draw();
+            BACKGROUND.filter();
             return;
         }
         PLAYER.draw();
