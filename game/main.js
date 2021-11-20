@@ -1,4 +1,4 @@
-import { Init, currentState, Update, Draw, Filter, STATES, username, deltaTime, setPrevTime, setDeltaTime, prevTime, score } from './lifecycle.js';
+import { Init, currentState, Update, Draw, Filter, STATES, username, setPrevTime, setDeltaTime, prevTime, score} from './lifecycle.js';
 import { sendScore } from './leaderboards.js';
 
 Init();
