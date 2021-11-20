@@ -5,22 +5,22 @@ import { collisionCheck } from "./collision.js"
 //AUDIO
 // for legacy browsers
 // get the audio element
-const audioBackground = new Audio("./assets/song.mp3");
-audioBackground.playbackRate = 1.0; 
-const audioContext1 = new AudioContext();
-const bgTrack = audioContext1.createMediaElementSource(audioBackground);
-audioBackground.volume = 0.05;
 
+const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
 
+
+const audioContext1 = new AudioContext();
 const audioContext2 = new AudioContext();
 const audioContext3 = new AudioContext();
 
-audioDead.volume = 0.1;
+audioBackground.volume = 0.05;
+audioDead.volume = 0.05;
 audioJump.volume = 0.05;
 
 // pass it into the audio context
+const bgTrack = audioContext1.createMediaElementSource(audioBackground);
 const deadTrack = audioContext2.createMediaElementSource(audioDead);
 const jumpTrack = audioContext3.createMediaElementSource(audioJump);
 
@@ -62,12 +62,6 @@ export const Init = () => {
     const name = document.querySelector(".name-input-elm");
     const errorMessage = document.querySelector(".input-error");
 
-    const audioBackground = new Audio("./assets/song.mp3");
-    audioBackground.playbackRate = 1.0; 
-    const audioContext1 = new AudioContext();
-    const bgTrack = audioContext1.createMediaElementSource(audioBackground);
-    audioBackground.volume = 0.05;
-
     name.addEventListener('keydown', (e) => {
         if (e.key === "Enter") {
             playButton.click();
@@ -85,6 +79,12 @@ export const Init = () => {
             return;
         }
 
+        if(name.value.length > 12) {
+            errorMessage.innerHTML = "12 characters max for your display name!"
+            return;
+        }
+
+        audioBackground.play();        
         playButton.disabled = true;
         name.disabled = true;
         username = name.value;

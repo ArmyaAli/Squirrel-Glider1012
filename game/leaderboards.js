@@ -11,7 +11,6 @@ export const getLeaderboard = async() => {
         const response = await fetch(url, config);
 
         const data = await response.json();
-        console.log(data);
 
         // first remove all leaderboard entries and then update the leaderboard
         leaderboard.replaceChildren();
