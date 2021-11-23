@@ -150,12 +150,12 @@ header {
     background-color: greenyellow;
     color: black;
     display: block;
-    padding: 2px;
     margin: 4px auto;
 }
 
 .leaderboard-entry {
     text-align: left;
+    padding: 4px;
 }
 
 #toggleMute {
