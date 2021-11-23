@@ -3,9 +3,6 @@ import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
 //AUDIO
-// for legacy browsers
-// get the audio element
-
 const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
@@ -75,24 +72,23 @@ export const Init = () => {
             return;
         }
 
-        if (name.value == "") {
+        if (name.value === "") {
             errorMessage.innerHTML = "Your username may not be empty!"
             return;
         }
 
-        if(name.value.length > 12) {
+        if (name.value.length > 12) {
             errorMessage.innerHTML = "12 characters max for your display name!"
             return;
         }
 
-        audioBackground.play();        
+        audioBackground.play();
         playButton.disabled = true;
         name.disabled = true;
         username = name.value;
         setCurrentState(STATES["PLAYING"]);
         errorMessage.innerHTML = "";
-
-
+        document.querySelector("#background-layer").focus();
     })
 
     toggleMute.addEventListener('click', () => {
@@ -108,7 +104,6 @@ export const Init = () => {
             document.getElementById("toggleMute").src = "./assets/mute.png";
 
         }
-        console.log("toggle mute");
     })
 
     window.addEventListener('keydown', (e) => {
@@ -187,8 +182,6 @@ export const Init = () => {
         }
     });
 
-    // The play event click will trigger a game state change if player has eneterd their name
-    // it will grab the name from the input textbox
     getLeaderboard();
 }
 
@@ -211,9 +204,6 @@ export const Update = () => {
         audioDead.play();
         PLAYER.update();
     }
-
-    // check collision
-
 }
 
 export const Draw = () => {
