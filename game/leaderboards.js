@@ -10,14 +10,17 @@ export const getLeaderboard = async() => {
     try {
         const response = await fetch(url, config);
 
-        const data = await response.json();
+        if (response.status === 404)
+            return;
 
+        const data = await response.json();
         // first remove all leaderboard entries and then update the leaderboard
         leaderboard.replaceChildren();
         // then populate
         for (const entry of data) {
             const item = document.createElement('li');
-            item.innerHTML = `<span class='leaderboard-entry'>${entry[0]}<---->${entry[1]}</span>`;
+            item.classList.add('leaderboard-item');
+            item.innerHTML = `<span class='leaderboard-entry'>${entry[0]}<span style="float:right; font-weight: bold;">${entry[1]}</span></span>`;
             leaderboard.appendChild(item);
         }
 
