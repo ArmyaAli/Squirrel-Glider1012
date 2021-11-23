@@ -10,7 +10,7 @@ const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
 
-
+const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext1 = new AudioContext();
 const audioContext2 = new AudioContext();
 const audioContext3 = new AudioContext();
