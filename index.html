@@ -34,7 +34,7 @@
             </ul>
         </div>
         <div class="canvas-container">
-            <canvas style="z-index: 0" id="background-layer"></canvas>
+            <canvas style="z-index: 0" id="background-layer" tabindex="0"></canvas>
             <canvas style="z-index: 1" id="trees-layer"></canvas>
             <canvas style="z-index: 2" id="player-layer"></canvas>
             <div class="input-container">
@@ -42,7 +42,6 @@
                     <label class="name-input-text" for="">Player: </label>
                     <input class="name-input-elm" placeholder="Enter your name here!" type="text" />
                     <input class="button" type="button" value="Play">
-                    <div class="input-error"></div>
                 </div>
             </div>
         </div>
@@ -55,7 +54,10 @@
             </ol>
         </div>
     </div>
-    <img class="toggleMute" id="toggleMute" src="./assets/play.png">
+    <div>
+        <div class="input-error"></div>
+        <img class="toggleMute" id="toggleMute" src="./assets/play.png">
+    </div>
     <footer>
         <div class="social">
             <a href="https://aliumar.dev/"><img src="./assets/mushroom.png" title="Ali Umar" width="32" height="32"></a>
