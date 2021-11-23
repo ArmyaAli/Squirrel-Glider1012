@@ -1,12 +1,10 @@
-import { Init, currentState, Update, Draw, Filter, STATES, username, setPrevTime, setDeltaTime, prevTime, score} from './lifecycle.js';
+import { Init, currentState, Update, Draw, Filter, STATES, username, setPrevTime, setDeltaTime, prevTime, score, updatedLeaderboard, setUpdatedLeaderboard } from './lifecycle.js';
 import { sendScore } from './leaderboards.js';
 
 Init();
 
 let currentTime = Date.now();
 setPrevTime(currentTime);
-
-let UPDATED_LEADERBOARD = false;
 
 const gameLoop = () => {
     setPrevTime(currentTime);
@@ -24,9 +22,9 @@ const gameLoop = () => {
             Draw();
             break;
         case STATES["GAME_OVER"]:
-            if (!UPDATED_LEADERBOARD) {
+            if (!updatedLeaderboard) {
                 sendScore(username, Math.round(score));
-                UPDATED_LEADERBOARD = true;
+                setUpdatedLeaderboard(true);
             }
             Update();
             Draw();
