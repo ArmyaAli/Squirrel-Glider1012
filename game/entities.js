@@ -35,7 +35,7 @@ class Player {
     constructor() {
         this.x = MAX_WIDTH / 3;
         this.y = MAX_HEIGHT / 2;
-        this.g = 0.1;
+        this.g = 0.2;
         this.deltaTime = 0;
         this.deltaTimeScore = 0;
         this.width = 75;
@@ -90,7 +90,7 @@ class Player {
 
     jump() {
         this.deltaTime = 0;
-        this.y -= 20;
+        this.y -= this.g * 100;
     }
 
     update() {
