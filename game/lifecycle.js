@@ -1,4 +1,4 @@
-import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO } from "./entities.js";
+import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO, GAME_RESET } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
@@ -37,6 +37,11 @@ export let score = 0;
 export let deltaTime = 0;
 export let prevTime = 0;
 export let currentState = 0;
+export let updatedLeaderboard = false;
+
+export const setUpdatedLeaderboard = (bool) => {
+    updatedLeaderboard = bool;
+}
 
 export const setCurrentState = (state) => {
     currentState = state;
@@ -170,7 +175,13 @@ export const Init = () => {
 
         if (x >= BUTTON_INFO["replay"].x && x <= BUTTON_INFO["replay"].x + 200) {
             if (y >= BUTTON_INFO["replay"].y + 60 && y <= BUTTON_INFO["replay"].y + 80 + 60) {
-                window.location.reload();
+                currentState = STATES["INITIAL"];
+                score = 0;
+                document.querySelector("input.button").disabled = false;
+                document.querySelector(".name-input-elm").disabled = false;
+                document.querySelector(".name-input-elm").focus();
+                updatedLeaderboard = false;
+                GAME_RESET();
             }
         }
 
