@@ -14,11 +14,6 @@ export const MAX_WIDTH = 800;
 export const MAX_HEIGHT = 400;
 export const GAME_SPEED = 3; // smaller = faster
 export let DONE_FALLING = false;
-const NUM_TREES = 2;
-
-// all our canvases should be equal size
-playercanvas.width = bgcanvas.width = treescanvas.width = 800;
-playercanvas.height = bgcanvas.height = treescanvas.height = 400;
 
 export const BUTTON_INFO = {
     "replay": {
@@ -31,6 +26,13 @@ export const BUTTON_INFO = {
     }
 };
 
+const NUM_TREES = 2;
+
+// all our canvases should be equal size
+playercanvas.width = bgcanvas.width = treescanvas.width = 800;
+playercanvas.height = bgcanvas.height = treescanvas.height = 400;
+
+
 class Player {
     constructor() {
         this.x = MAX_WIDTH / 3;
@@ -42,7 +44,6 @@ class Player {
         this.height = 75;
         this.position = { x: this.x, y: this.y };
         this.mass = 1;
-        this.squirrelSprite = [new Image(), new Image(), new Image()];
         this.squirrel = {
             0: {
                 image: new Image(),
@@ -94,16 +95,9 @@ class Player {
     }
 
     update() {
-        // erase before we redraw
         playerctx.clearRect(0, 0, playercanvas.width, playercanvas.height);
         this.deltaTimeScore += deltaTime;
-        // update the player score too
-        // for every frame we can update the score. The average
-        // setTimeout(() => {
-        //     SCORE = Math.floor((this.deltaTimeScore / deltaTime) / 1000);
-        // }, deltaTime * 320);
 
-        // SCORE = Math.floor((Math.round(this.deltaTimeScore / deltaTime) / (1 / (deltaTime * 0.001))) * (deltaTime * 160 * 0.001));
         if (this.currentState === this.states["Dead"]) {
             this.deltaTime += deltaTime;
             this.y += this.g * (this.deltaTime * this.deltaTime) * 0.00001;
@@ -236,7 +230,7 @@ class gameOver {
 
         playerctx.fillText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
         playerctx.strokeText(this.gameOverText, MAX_WIDTH / 2 - playerctx.measureText(this.gameOverText).width / 2, MAX_HEIGHT / 2 - 24);
-        
+
         playerctx.font = '64px sans-serif';
         playerctx.lineWidth = 2;
 
@@ -260,7 +254,18 @@ class gameOver {
 
 }
 
-export const BACKGROUND = new ScrollingBackground();
-export const PLAYER = new Player();
-export const TREES = new Trees();
-export const GAMEOVER = new gameOver();
+// GAME ENTITIES (SINGLETONS)
+export let BACKGROUND = new ScrollingBackground();
+export let PLAYER = new Player();
+export let TREES = new Trees();
+export let GAMEOVER = new gameOver();
+
+export const GAME_RESET = () => {
+    playerctx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+    bgctx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+    treectx.clearRect(0, 0, MAX_WIDTH, MAX_HEIGHT);
+    PLAYER = new Player();
+    TREES = new Trees();
+    GAMEOVER = new gameOver();
+    DONE_FALLING = false;
+}
