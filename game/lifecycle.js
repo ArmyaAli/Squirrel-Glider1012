@@ -1,29 +1,39 @@
 import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO, GAME_RESET } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
-
 //AUDIO
 const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext1 = new AudioContext();
-const audioContext2 = new AudioContext();
-const audioContext3 = new AudioContext();
+
+let audioContext1;
+let audioContext2;
+let audioContext3;
+let bgTrack;
+let deadTrack;
+let jumpTrack;
+
+window.onload = function() {
+    audioContext1 = new AudioContext();
+    audioContext2 = new AudioContext();
+    audioContext3 = new AudioContext();
+    // pass it into the audio context
+    bgTrack = audioContext1.createMediaElementSource(audioBackground);
+    deadTrack = audioContext2.createMediaElementSource(audioDead);
+    jumpTrack = audioContext3.createMediaElementSource(audioJump);
+
+    bgTrack.connect(audioContext1.destination);
+    deadTrack.connect(audioContext2.destination);
+    jumpTrack.connect(audioContext3.destination);
+}
 
 audioBackground.volume = 0.05;
 audioDead.volume = 0.05;
 audioJump.volume = 0.05;
 
-// pass it into the audio context
-const bgTrack = audioContext1.createMediaElementSource(audioBackground);
-const deadTrack = audioContext2.createMediaElementSource(audioDead);
-const jumpTrack = audioContext3.createMediaElementSource(audioJump);
 
-bgTrack.connect(audioContext1.destination);
-deadTrack.connect(audioContext2.destination);
-jumpTrack.connect(audioContext3.destination);
 
 export const STATES = {
     "INITIAL": 0,
