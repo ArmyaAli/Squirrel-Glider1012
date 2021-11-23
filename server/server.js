@@ -66,7 +66,7 @@ const handleReadRequest = async(request, response) => {
         // Tell the client we are sending json
         response.setHeader('Access-Control-Allow-Origin', "*");
 
-        response.writeHead(200, {
+        response.writeHead(404, {
             'Content-Type': 'application/json',
             'X-Powered-By': 'MushroomApplePi'
         });
