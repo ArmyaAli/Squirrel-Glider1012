@@ -1,5 +1,5 @@
-import { TREES, PLAYER, MAX_HEIGHT } from "./entities.js";
-import { setCurrentState, incrementScore, STATES } from "./lifecycle.js";
+import { TREES, PLAYER, MAX_HEIGHT, GAME_SPEED, decrementGameSpeed } from "./entities.js";
+import { setCurrentState, incrementScore, STATES, score, setLevel, levelThreshold } from "./lifecycle.js";
 
 export const collisionCheck = () => {
     const trees = TREES.position;
@@ -14,6 +14,10 @@ export const collisionCheck = () => {
                     setCurrentState(STATES["GAME_OVER"]);
                 } else {
                     incrementScore();
+                    if (Math.round(score) % levelThreshold === 0 && Math.round(score) > 0) {
+                        setLevel();
+                        decrementGameSpeed();
+                    }
                 }
             }
         }

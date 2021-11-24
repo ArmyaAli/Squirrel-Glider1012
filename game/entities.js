@@ -1,4 +1,4 @@
-import { deltaTime, score } from "./lifecycle.js";
+import { deltaTime, score, level } from "./lifecycle.js";
 
 // CANVAS 
 const playercanvas = document.getElementById('player-layer');
@@ -12,8 +12,9 @@ const treectx = treescanvas.getContext('2d');
 // GLOBALS
 export const MAX_WIDTH = 800;
 export const MAX_HEIGHT = 400;
-export const GAME_SPEED = 3; // smaller = faster
+export let GAME_SPEED = 3; // smaller = faster
 export let DONE_FALLING = false;
+export let SPEEDING_UP = false;
 
 export const BUTTON_INFO = {
     "replay": {
@@ -25,6 +26,18 @@ export const BUTTON_INFO = {
         y: MAX_HEIGHT / 2
     }
 };
+
+
+export const setGameSpeed = (speed) => {
+    GAME_SPEED = speed;
+}
+
+export const decrementGameSpeed = () => {
+    if (GAME_SPEED > 1.2) {
+        GAME_SPEED = 3 - 0.2 * (Math.round(level) - 1);
+        SPEEDING_UP = true;
+    }
+}
 
 const NUM_TREES = 2;
 
@@ -72,13 +85,43 @@ class Player {
     }
 
     draw() {
+        const scoreText = `Score: ${Math.round(score)}`;
+        const levelText = `Level: ${level}`;
+
+        // SCORE
         playerctx.font = '32px sans-serif';
         playerctx.fillStyle = "beige";
-        playerctx.strokeStyle = "black"
+        playerctx.strokeStyle = "black";
         playerctx.lineWidth = 1;
-        playerctx.fillText(`Score: ${Math.round(score)}`, 16, 48, 512);
-        playerctx.strokeText(`Score: ${Math.round(score)}`, 16, 48, 512);
+
+        playerctx.fillText(scoreText, 16, 48, 512);
+        playerctx.strokeText(scoreText, 16, 48, 512);
+
+        // LEVEL
+        playerctx.font = '24px sans-serif';
+        playerctx.fillStyle = "beige";
+        playerctx.strokeStyle = "black";
+
+        playerctx.fillText(levelText, 16, 48 + 32, 512);
+        playerctx.strokeText(levelText, 16, 48 + 32, 512);
+
+        // PLAYER
         playerctx.drawImage(this.squirrel[this.currentState].image, this.x, this.y, this.width, this.height);
+
+        playerctx.font = '32px sans-serif';
+        playerctx.fillStyle = "beige";
+        playerctx.strokeStyle = "red";
+
+        if (SPEEDING_UP) {
+            const message = "Speeding up!"
+            playerctx.fillText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);
+            playerctx.strokeText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);
+            setTimeout(() => {
+                playerctx.fillText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);
+                playerctx.strokeText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);
+                SPEEDING_UP = false;
+            }, 500);
+        }
     }
 
     setState(keyEvent) {
