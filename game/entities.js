@@ -1,4 +1,4 @@
-import { setCurrentState, STATES, deltaTime, prevTime, score } from "./lifecycle.js";
+import { deltaTime, score } from "./lifecycle.js";
 
 // CANVAS 
 const playercanvas = document.getElementById('player-layer');

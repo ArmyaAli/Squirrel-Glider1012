@@ -1,5 +1,5 @@
-import { TREES, PLAYER, MAX_HEIGHT, MAX_WIDTH } from "./entities.js";
-import { setCurrentState, incrementScore, STATES, deltaTime} from "./lifecycle.js";
+import { TREES, PLAYER, MAX_HEIGHT } from "./entities.js";
+import { setCurrentState, incrementScore, STATES } from "./lifecycle.js";
 
 export const collisionCheck = () => {
     const trees = TREES.position;
