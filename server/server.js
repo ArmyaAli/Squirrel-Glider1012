@@ -10,9 +10,9 @@
 const http = require('http');
 const { readFile, writeFile } = require('fs/promises');
 
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
-const DATABASE = process.env.PORT ? "./leaderboard.txt" : "./server/leaderboard.txt";
+const DATABASE = "./server/leaderboard.txt";
 
 const readFromFile = async() => {
     let leaderboard = [];
