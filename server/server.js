@@ -17,29 +17,33 @@ const DATABASE = "./server/leaderboard.txt";
 const readFromFile = async() => {
     let leaderboard = [];
 
-    const buffer = await readFile(DATABASE, { encoding: "utf-8", flag: "r" });
+    try {
+        const buffer = await readFile(DATABASE, { encoding: "utf-8" });
 
-    if (buffer === "")
-        return [];
+        if (buffer === "")
+            return [];
 
-    const lines = buffer.split("\n");
+        const lines = buffer.split("\n");
 
-    for (const line of lines) {
-        const parts = line.split(/[ \t]+/);
-        leaderboard.push([parts[0], parts[1]]);
+        for (const line of lines) {
+            const parts = line.split(/[ \t]+/);
+            leaderboard.push([parts[0], parts[1]]);
+        }
+
+        leaderboard = leaderboard.sort((first, second) => {
+            if (parseInt(first[1]) > parseInt(second[1]))
+                return -1;
+            else if (parseInt(first[1]) < parseInt(second[1]))
+                return 1;
+            else
+                return 0;
+        });
+
+        return leaderboard;
+
+    } catch (err) {
+        console.log(`Error in Proc readFromFile: ${err}`);
     }
-
-    leaderboard = leaderboard.sort((first, second) => {
-        if (parseInt(first[1]) > parseInt(second[1]))
-            return -1;
-        else if (parseInt(first[1]) < parseInt(second[1]))
-            return 1;
-        else
-            return 0;
-    });
-
-
-    return leaderboard;
 
 
 }
@@ -49,6 +53,9 @@ const handleReadRequest = async(request, response) => {
     try {
 
         const leaderboard = await readFromFile();
+
+        if (leaderboard === undefined)
+            throw "No leaderboard data";
 
         response.setHeader('Access-Control-Allow-Origin', "*");
         // Tell the client we are sending json
@@ -62,7 +69,7 @@ const handleReadRequest = async(request, response) => {
         response.end();
 
     } catch (err) {
-        console.log(err);
+        console.log(`Error in Proc handleReadRequest ${err}`);
         // Tell the client we are sending json
         response.setHeader('Access-Control-Allow-Origin', "*");
 
@@ -108,7 +115,8 @@ const handleWriteRequest = async(request, response) => {
             response.end();
 
         } catch (err) {
-            console.log(err)
+            console.log(`Error in Proc handleWriteRequest ${err}`);
+
             response.setHeader('Access-Control-Allow-Origin', "*");
 
             response.writeHead(404, {
@@ -131,6 +139,7 @@ const server = http.createServer((request, response) => {
             handleWriteRequest(request, response);
             break;
     }
+
 });
 
 server.listen(PORT, () => {
