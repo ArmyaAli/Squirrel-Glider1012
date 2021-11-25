@@ -3,14 +3,16 @@ import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
 
 //AUDIO
-const audioBackground = new Audio("./assets/song.mp3");
+export const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
+export const audioLevel = new Audio("./assets/levelup.mp3");
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext1 = new AudioContext();
 const audioContext2 = new AudioContext();
 const audioContext3 = new AudioContext();
+const audioContext4 = new AudioContext();
 
 audioBackground.volume = 0.05;
 audioDead.volume = 0.05;
@@ -20,10 +22,12 @@ audioJump.volume = 0.05;
 const bgTrack = audioContext1.createMediaElementSource(audioBackground);
 const deadTrack = audioContext2.createMediaElementSource(audioDead);
 const jumpTrack = audioContext3.createMediaElementSource(audioJump);
+const levelTrack = audioContext4.createMediaElementSource(audioLevel);
 
 bgTrack.connect(audioContext1.destination);
 deadTrack.connect(audioContext2.destination);
 jumpTrack.connect(audioContext3.destination);
+levelTrack.connect(audioContext4.destination);
 
 export const STATES = {
     "INITIAL": 0,
