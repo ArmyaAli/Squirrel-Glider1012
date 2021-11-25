@@ -142,6 +142,7 @@ header {
 .leaderboard {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     padding: 8px;
+    text-align: center;
 }
 
 .leaderboard-item {
@@ -150,12 +151,12 @@ header {
     background-color: greenyellow;
     color: black;
     display: block;
-    padding: 2px;
     margin: 4px auto;
+    text-align: left;
 }
 
 .leaderboard-entry {
-    text-align: left;
+    padding: 4px;
 }
 
 #toggleMute {

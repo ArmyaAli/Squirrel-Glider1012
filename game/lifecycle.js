@@ -1,33 +1,15 @@
-import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO, GAME_RESET } from "./entities.js";
+import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO, GAME_RESET, setGameSpeed } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
 import { collisionCheck } from "./collision.js"
-
 //AUDIO
 export const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
 export const audioLevel = new Audio("./assets/levelup.mp3");
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext1 = new AudioContext();
-const audioContext2 = new AudioContext();
-const audioContext3 = new AudioContext();
-const audioContext4 = new AudioContext();
-
-audioBackground.volume = 0.05;
-audioDead.volume = 0.05;
-audioJump.volume = 0.05;
-
-// pass it into the audio context
-const bgTrack = audioContext1.createMediaElementSource(audioBackground);
-const deadTrack = audioContext2.createMediaElementSource(audioDead);
-const jumpTrack = audioContext3.createMediaElementSource(audioJump);
-const levelTrack = audioContext4.createMediaElementSource(audioLevel);
-
-bgTrack.connect(audioContext1.destination);
-deadTrack.connect(audioContext2.destination);
-jumpTrack.connect(audioContext3.destination);
-levelTrack.connect(audioContext4.destination);
+audioBackground.volume = 0.03;
+audioDead.volume = 0.03;
+audioJump.volume = 0.03;
 
 export const STATES = {
     "INITIAL": 0,
@@ -38,6 +20,8 @@ export const STATES = {
 
 export let username = "";
 export let score = 0;
+export let level = 1; // start at level 1
+export let levelThreshold = 10;
 export let deltaTime = 0;
 export let prevTime = 0;
 export let currentState = 0;
@@ -61,6 +45,12 @@ export const setPrevTime = (t) => {
 
 export const incrementScore = () => {
     score += (1 * deltaTime) / (75 * GAME_SPEED);
+}
+
+export const setLevel = () => {
+    if (level < 10) {
+        level = 1 + Math.round(score) / levelThreshold;
+    }
 }
 
 export const Init = () => {
@@ -181,6 +171,8 @@ export const Init = () => {
             if (y >= BUTTON_INFO["replay"].y + 60 && y <= BUTTON_INFO["replay"].y + 80 + 60) {
                 currentState = STATES["INITIAL"];
                 score = 0;
+                level = 1;
+                setGameSpeed(3);
                 document.querySelector("input.button").disabled = false;
                 document.querySelector(".name-input-elm").disabled = false;
                 document.querySelector(".name-input-elm").focus();
