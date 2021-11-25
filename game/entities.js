@@ -1,4 +1,4 @@
-import { deltaTime, score, level } from "./lifecycle.js";
+import { deltaTime, score, level, playLevelUp } from "./lifecycle.js";
 
 // CANVAS 
 const playercanvas = document.getElementById('player-layer');
@@ -113,6 +113,7 @@ class Player {
         playerctx.strokeStyle = "red";
 
         if (SPEEDING_UP) {
+            playLevelUp();
             const message = "Speeding up!"
             playerctx.fillText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);
             playerctx.strokeText(message, MAX_WIDTH / 2, MAX_HEIGHT / 2);

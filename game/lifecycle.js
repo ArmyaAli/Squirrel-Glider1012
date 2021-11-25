@@ -1,15 +1,17 @@
 import { BACKGROUND, PLAYER, TREES, DONE_FALLING, GAMEOVER, GAME_SPEED, BUTTON_INFO, GAME_RESET, setGameSpeed } from "./entities.js";
 import { getLeaderboard } from "./leaderboards.js";
-import { collisionCheck } from "./collision.js"
+import { collisionCheck } from "./collision.js";
+
 //AUDIO
-export const audioBackground = new Audio("./assets/song.mp3");
+const audioBackground = new Audio("./assets/song.mp3");
 const audioDead = new Audio("./assets/death.mp3");
 const audioJump = new Audio("./assets/jump.mp3");
-export const audioLevel = new Audio("./assets/levelup.mp3");
+const audioLevel = new Audio("./assets/levelup.mp3");
 
 audioBackground.volume = 0.03;
 audioDead.volume = 0.03;
 audioJump.volume = 0.03;
+audioLevel.volume = 0.06;
 
 export const STATES = {
     "INITIAL": 0,
@@ -45,6 +47,10 @@ export const setPrevTime = (t) => {
 
 export const incrementScore = () => {
     score += (1 * deltaTime) / (75 * GAME_SPEED);
+}
+
+export const playLevelUp = () => {
+    audioLevel.play();
 }
 
 export const setLevel = () => {
