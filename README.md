@@ -55,7 +55,7 @@ We are making an arcade web game that allows you to control a squirrel and guide
 ## Instructions (Run from source code)
 
 1. Clone the repository
-2. ```javascript npm install``` - to install all the node dependencies
+2. ```npm install``` - to install all the node dependencies
 3. ```npm run server``` - to start a server process
 4. You also need to create a leaderboard.txt file in the server folder in order to have leaderboard functionality. Please note that if you are using a live server extension you must blacklist this textfile from your live server extension, otherwise it will refresh the browser page when the score has been sent to the server
 5. You *must* open index.html with a web server (Live Server extension in vscode works very well) because javascript modules are used. See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules. Modules allow for cleaner code
