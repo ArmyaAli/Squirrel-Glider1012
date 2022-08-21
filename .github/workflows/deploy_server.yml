@@ -42,7 +42,6 @@ jobs:
         bash -i -c \
         "
         cd ~/dev;
-        rm -rf ~/dev/Squirrel-Glider1012;  
         git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
         cd Squirrel-Glider1012;
         git sparse-checkout add server;
@@ -52,7 +51,6 @@ jobs:
         sudo cp -avf dist /var/www/lordmushroom.dev/api/glider;
         cd /var/www/lordmushroom.dev/api/glider;
         ls -al;
-        rm -rf ~/dev/Squirrel-Glider1012;  
         "'
       env:
         USER: ${{ secrets.USER }}
