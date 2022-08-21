@@ -1,0 +1,59 @@
+name: dashboard deployment flow
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - .github/workflows/**
+      - server/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+        cache-dependency-path: dashboard/package-lock.json
+    - run: | 
+        cd dashboard 
+        npm ci 
+        npm run build --if-present 
+  deploy:
+    name: deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Create SSH Key
+      run: touch key 
+    - name: Populate key
+      run: 'echo "$SSH_KEY" > key'
+      shell: bash
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}
+    - name: set permissions
+      run: chmod 400 key
+    - name: SSH into the server
+      shell: bash
+      run: ssh -t -o StrictHostKeyChecking=no -i key $USER@$ENDPOINT -t \
+        '
+        bash -i -c \
+        "
+        cd ~/dev;
+        rm -rf ~/dev/Squirrel-Glider1012;  
+        git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
+        cd Squirrel-Glider1012;
+        git sparse-checkout add server;
+        cd server;
+        npm ci;
+        npm run build;
+        sudo cp -avf dist /var/www/lordmushroom.dev/api/glider;
+        cd /var/www/lordmushroom.dev/api/glider;
+        ls -al;
+        rm -rf ~/dev/Squirrel-Glider1012;  
+        "'
+      env:
+        USER: ${{ secrets.USER }}
+        ENDPOINT: ${{ secrets.ENDPOINT }}
