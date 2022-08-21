@@ -48,8 +48,8 @@ jobs:
         cd server;
         npm ci;
         npm run build;
-        sudo cp -avf dist /var/www/lordmushroom.dev/api/glider;
-        cd /var/www/lordmushroom.dev/api/glider;
+        sudo cp -avf build /var/www/lordmushroom.dev/api/glider_server;
+        cd /var/www/lordmushroom.dev/api/glider_server;
         ls -al;
         "'
       env:
