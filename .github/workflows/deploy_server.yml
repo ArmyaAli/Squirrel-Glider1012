@@ -16,9 +16,9 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
-        cache-dependency-path: dashboard/package-lock.json
+        cache-dependency-path: server/package-lock.json
     - run: | 
-        cd dashboard 
+        cd server 
         npm ci 
         npm run build --if-present 
   deploy:
