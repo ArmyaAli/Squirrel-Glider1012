@@ -2,7 +2,7 @@ name: dashboard deployment flow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "development" ]
     paths:
       - .github/workflows/**
       - server/**
