@@ -35,19 +35,19 @@ jobs:
         SSH_KEY: ${{ secrets.SSH_KEY }}
     - name: set permissions
       run: chmod 400 key
-    # - name: Create .env file and populate it
-    #   run: touch .env && echo $ENV > .env
-    #   shell: bash
-    #   env:
-    #     ENV: ${{ secrets.ENV }}
-    # - name: make sure .env is formatted correctly
-    #   run: sed -i 's/ /\n/' .env
-    #   shell: bash
-    # - name: Send .env file to PI
-    #   run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
-    #   env:
-    #     USER: ${{ secrets.USER }}
-    #     ENDPOINT: ${{ secrets.ENDPOINT }}
+    - name: Create .env file and populate it
+      run: touch .env && echo $ENV > .env
+      shell: bash
+      env:
+        ENV: ${{ secrets.ENV }}
+    - name: make sure .env is formatted correctly
+      run: sed -i 's/ /\n/g' .env
+      shell: bash
+    - name: Send .env file to PI
+      run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
+      env:
+        USER: ${{ secrets.USER }}
+        ENDPOINT: ${{ secrets.ENDPOINT }}
     - name: SSH into the server
       shell: bash
       run: ssh -t -o StrictHostKeyChecking=no -i key $USER@$ENDPOINT -t \
@@ -67,7 +67,7 @@ jobs:
         sudo cp -avf build/. /var/www/lordmushroom.dev/api/glider_server;
         sudo cp -avf node_modules /var/www/lordmushroom.dev/api/glider_server;
         sudo mv /home/ubuntu/dev/tmp/.env /var/www/lordmushroom.dev/api/glider_server; 
-        TLS_KEY_PATH=$TLS_KEY_PATH TLS_CERT_PATH=$TLS_CERT_PATH FILE_PATH=$FILE_PATH PORT=$PORT pm2 start /var/www/lordmushroom.dev/api/glider_server/server.js --update-env;
+        pm2 start /var/www/lordmushroom.dev/api/glider_server/server.js --update-env;
         "'
       env:
         USER: ${{ secrets.USER }}
