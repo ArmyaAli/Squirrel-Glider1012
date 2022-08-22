@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises';
+import { readFileSync } from 'fs';
 import { config } from 'dotenv';
 
 config();
@@ -6,9 +6,9 @@ config();
 let key = "";
 let cert = "";
 
-await (async () => {
-    key = (await readFile(process.env.TLS_KEY_PATH) as unknown) as string; 
-    cert = (await readFile(process.env.TLS_CERT_PATH) as unknown) as string; 
+(() => {
+    key = (readFileSync(process.env.TLS_KEY_PATH) as unknown) as string; 
+    cert = (readFileSync(process.env.TLS_CERT_PATH) as unknown) as string; 
     console.log("Hello World.\n");
     console.log(key, cert);
 })();
