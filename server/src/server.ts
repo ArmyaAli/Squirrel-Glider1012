@@ -9,7 +9,6 @@ const server = https.createServer(SERVER_OPTIONS, (request, response) => {
     const { method } = request;
     switch (method) {
         case "GET":
-            console.log('hit me baby');
             handleReadRequest(request, response);
             break;
         case "POST":
