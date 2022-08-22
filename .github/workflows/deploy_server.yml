@@ -35,14 +35,14 @@ jobs:
         SSH_KEY: ${{ secrets.SSH_KEY }}
     - name: set permissions
       run: chmod 400 key
-    - name: Create .env file and populate it
-      run: touch .env && echo $ENV > .env
-      shell: bash
-      env:
-        ENV: ${{ secrets.ENV }}
-    - name: make sure .env is formatted correctly
-      run: sed -i 's/ /\n/' .env
-      shell: bash
+    # - name: Create .env file and populate it
+    #   run: touch .env && echo $ENV > .env
+    #   shell: bash
+    #   env:
+    #     ENV: ${{ secrets.ENV }}
+    # - name: make sure .env is formatted correctly
+    #   run: sed -i 's/ /\n/' .env
+    #   shell: bash
     - name: Send .env file to PI
       run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
       env:
@@ -72,3 +72,7 @@ jobs:
       env:
         USER: ${{ secrets.USER }}
         ENDPOINT: ${{ secrets.ENDPOINT }}
+        TLS_KEY_PATH: ${{ secrets.TLS_KEY_PATH }}
+        TLS_CERT_PATH: ${{ secrets.TLS_CERT_PATH }}
+        FILE_PATH: ${{ secrets.FILE_PATH }}
+        $PORT: ${{ secrets.PORT }}
