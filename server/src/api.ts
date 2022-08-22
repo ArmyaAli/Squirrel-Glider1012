@@ -19,7 +19,7 @@ const readFromFile = async() => {
 
         leaderboard = leaderboard.sort((first, second) => {
             if (parseInt(first[1]) > parseInt(second[1]))
-                return 0;
+                return -1;
             else if (parseInt(first[1]) < parseInt(second[1]))
                 return 1;
             else
