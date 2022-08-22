@@ -69,6 +69,7 @@ jobs:
         sudo cp -avf node_modules /var/www/lordmushroom.dev/api/glider_server;
         sudo mv /home/ubuntu/dev/tmp/.env /var/www/lordmushroom.dev/api/glider_server; 
         pm2 start /var/www/lordmushroom.dev/api/glider_server/server.js --update-env;
+        rm -rf Squirrel-Glider1012;
         "'
       env:
         USER: ${{ secrets.USER }}
