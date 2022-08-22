@@ -40,6 +40,9 @@ jobs:
       shell: bash
       env:
         ENV: ${{ secrets.ENV }}
+    - name: make sure .env is formatted correctly
+    - run: sed -i 's/ /\n/' .env
+      shell: bash
     - name: Send .env file to PI
       run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
       env:
