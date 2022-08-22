@@ -43,7 +43,6 @@ jobs:
     - name: Send .env file to PI
       run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
       env:
-        PORT: ${{ secrets.SSH_PORT }}
         USER: ${{ secrets.USER }}
         ENDPOINT: ${{ secrets.ENDPOINT }}
     - name: SSH into the server
@@ -54,6 +53,7 @@ jobs:
         "
         cd ~/dev;
         rm -rf Squirrel-Glider1012;
+        sudo pm2 stop server;
         git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
         cd Squirrel-Glider1012;
         git sparse-checkout add server;
