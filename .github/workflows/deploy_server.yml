@@ -53,7 +53,7 @@ jobs:
         "
         cd ~/dev;
         rm -rf Squirrel-Glider1012;
-        sudo pm2 stop server;
+        pm2 stop server;
         git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
         cd Squirrel-Glider1012;
         git sparse-checkout add server;
