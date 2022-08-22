@@ -39,7 +39,7 @@ jobs:
       run: 'touch .env && echo "$ENV" > .env'
       shell: bash
       env:
-        ENV: ${{ secrets.ENV_FILE }}
+        ENV: ${{ secrets.ENV }}
     - name: Send .env file to PI
       run: scp -o StrictHostKeyChecking=no -i key .env $USER@$ENDPOINT:~/dev/tmp
       env:
