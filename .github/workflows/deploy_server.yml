@@ -64,7 +64,6 @@ jobs:
         sudo cp -avf build/. /var/www/lordmushroom.dev/api/glider_server;
         sudo cp -avf node_modules /var/www/lordmushroom.dev/api/glider_server;
         sudo mv /home/ubuntu/dev/tmp/.env /var/www/lordmushroom.dev/api/glider_server;  
-        pm2 start -f /var/www/lordmushroom.dev/api/glider_server/server.js;
         ls -al;
         "'
       env:
