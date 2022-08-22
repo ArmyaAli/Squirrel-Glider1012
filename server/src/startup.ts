@@ -3,9 +3,18 @@ import {config} from 'dotenv';
 
 config();
 
-const key = process.env.TLS_KEY_PATH;
-const cert = process.env.TLS_CERT_PATH;
+let key = process.env.TLS_KEY_PATH;
+let cert = process.env.TLS_CERT_PATH;
 const port = process.env.PORT;
+
+const init = async () => {
+    key = (await readFile(key) as unknown) as string; 
+    cert = (await readFile(cert) as unknown) as string; 
+}
+
+init();
+
+export const DATABASE = process.env.FILE_PATH;
 
 export const SERVER_OPTIONS = {
     key: key, 
