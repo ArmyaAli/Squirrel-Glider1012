@@ -75,4 +75,4 @@ jobs:
         TLS_KEY_PATH: ${{ secrets.TLS_KEY_PATH }}
         TLS_CERT_PATH: ${{ secrets.TLS_CERT_PATH }}
         FILE_PATH: ${{ secrets.FILE_PATH }}
-        $PORT: ${{ secrets.PORT }}
+        PORT: ${{ secrets.PORT }}
