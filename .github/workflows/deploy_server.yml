@@ -57,6 +57,7 @@ jobs:
         git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
         cd Squirrel-Glider1012;
         git sparse-checkout add server;
+        git checkout development;
         cd server;
         npm ci;
         npm run build;
