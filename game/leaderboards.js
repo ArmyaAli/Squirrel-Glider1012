@@ -1,4 +1,4 @@
-const url = "http://142.126.206.241:3000/";
+const url = "https://api.lordmushroom.dev/glider";
 
 export const getLeaderboard = async() => {
     const leaderboard = document.querySelector(".leaderboard>ol");
