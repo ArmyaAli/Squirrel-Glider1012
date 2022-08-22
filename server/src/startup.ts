@@ -10,6 +10,7 @@ const port = process.env.PORT;
 const init = async () => {
     key = (await readFile(key) as unknown) as string; 
     cert = (await readFile(cert) as unknown) as string; 
+    console.log(key, cert)
 }
 
 init();
