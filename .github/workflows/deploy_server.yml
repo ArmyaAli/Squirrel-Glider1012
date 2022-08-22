@@ -42,13 +42,14 @@ jobs:
         bash -i -c \
         "
         cd ~/dev;
+        rm -rf Squirrel-Glider1012;
         git clone --filter=blob:none --sparse https://github.com/ArmyaAli/Squirrel-Glider1012.git;
         cd Squirrel-Glider1012;
         git sparse-checkout add server;
         cd server;
         npm ci;
         npm run build;
-        sudo cp -avf build /var/www/lordmushroom.dev/api/glider_server;
+        sudo cp -avf build\. /var/www/lordmushroom.dev/api/glider_server;
         cd /var/www/lordmushroom.dev/api/glider_server;
         ls -al;
         "'
