@@ -9,8 +9,6 @@ let cert = "";
 (() => {
     key = (readFileSync(process.env.TLS_KEY_PATH) as unknown) as string; 
     cert = (readFileSync(process.env.TLS_CERT_PATH) as unknown) as string; 
-    console.log("Hello World.\n");
-    console.log(key, cert);
 })();
 
 export const DB = process.env.FILE_PATH;
