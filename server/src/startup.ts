@@ -6,7 +6,7 @@ config();
 let key = "";
 let cert = "";
 
-(async () => {
+await (async () => {
     key = (await readFile(process.env.TLS_KEY_PATH) as unknown) as string; 
     cert = (await readFile(process.env.TLS_CERT_PATH) as unknown) as string; 
     console.log("Hello World.\n");
