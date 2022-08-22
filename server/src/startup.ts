@@ -3,14 +3,14 @@ import { config } from 'dotenv';
 
 config();
 
-let key = process.env.TLS_KEY_PATH;
-let cert = process.env.TLS_CERT_PATH;
-const port = process.env.PORT;
+let key = "";
+let cert = "";
 
 (async () => {
-    key = (await readFile(key) as unknown) as string; 
-    cert = (await readFile(cert) as unknown) as string; 
-    console.log(key, cert)
+    key = (await readFile(process.env.TLS_KEY_PATH) as unknown) as string; 
+    cert = (await readFile(process.env.TLS_CERT_PATH) as unknown) as string; 
+    console.log("Hello World.\n");
+    console.log(key, cert);
 })();
 
 export const DB = process.env.FILE_PATH;
@@ -20,4 +20,4 @@ export const SERVER_OPTIONS = {
     cert: cert
 };
 
-export const SERVER_PORT = port; 
+export const SERVER_PORT = process.env.PORT; 
