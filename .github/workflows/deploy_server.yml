@@ -64,13 +64,12 @@ jobs:
         cd server;
         npm ci;
         npm run build;
-        sudo find . -name "*.*" -type d -empty -delete;
         sudo cp -avf build/. /var/www/lordmushroom.dev/api/glider_server;
         sudo cp -af node_modules /var/www/lordmushroom.dev/api/glider_server;
         sudo cp -avf prod/. /var/www/lordmushroom.dev/api/glider_server;
         sudo mv /home/ubuntu/dev/tmp/.env /var/www/lordmushroom.dev/api/glider_server; 
         pm2 start /var/www/lordmushroom.dev/api/glider_server/ecosystem.config.js;
-        rm -rf Squirrel-Glider1012;
+        rm -rf /home/ubuntu/dev/Squirrel-Glider1012;
         "'
       env:
         USER: ${{ secrets.USER }}
