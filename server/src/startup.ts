@@ -4,8 +4,8 @@ import { exit } from 'process';
 
 config();
 
-let key_path = process.env.TLS_KEY_PATH;
-let cert_path = process.env.TLS_CERT_PATH;
+const key_path = process.env.TLS_KEY_PATH;
+const cert_path = process.env.TLS_CERT_PATH;
 
 
 if(key_path === undefined || cert_path === undefined) 
