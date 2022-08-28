@@ -1,14 +1,21 @@
 import { readFileSync } from 'fs';
 import { config } from 'dotenv';
+import { exit } from 'process';
 
 config();
 
-let key = "";
-let cert = "";
+let key_path = process.env.TLS_KEY_PATH;
+let cert_path = process.env.TLS_CERT_PATH;
+
+let key: Buffer;
+let cert: Buffer;
+
+if(key_path === undefined || cert_path === undefined) 
+    exit(1);
 
 (() => {
-    key = (readFileSync(process.env.TLS_KEY_PATH) as unknown) as string; 
-    cert = (readFileSync(process.env.TLS_CERT_PATH) as unknown) as string; 
+    key = readFileSync(key_path); 
+    cert = readFileSync(cert_path); 
 })();
 
 export const DB = process.env.FILE_PATH;
